@@ -4,7 +4,7 @@
  * Rutas y páginas relacionadas con autenticación dentro de `app/`.
  *
  * Aquí sí va:
- * - páginas y rutas públicas/privadas (p. ej. app/auth/login/page.tsx)
+ * - páginas y rutas públicas/privadas (p. ej. app/auth/login/layout.tsx)
  * - layouts o templates específicos de auth
  *
  * Aquí NO va:
@@ -12,8 +12,8 @@
  * - componentes reutilizables globales (mover a `shared/components`)
  *
  * Ejemplo de estructura esperada:
- * - app/auth/login/page.tsx
- * - app/auth/register/page.tsx
+ * - app/auth/login/layout.tsx
+ * - app/auth/register/layout.tsx
  * - app/auth/(protected)/...
  */
 

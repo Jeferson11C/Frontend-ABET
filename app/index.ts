@@ -3,7 +3,7 @@
  *
  * Esta carpeta contiene únicamente:
  * - rutas de Next.js
- * - page.tsx
+ * - layout.tsx
  * - layout.tsx
  * - loading.tsx
  * - error.tsx
