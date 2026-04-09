@@ -10,7 +10,7 @@ export default function ModalsDemoPage() {
     const [openError, setOpenError] = useState(false);
     const [openConfirm, setOpenConfirm] = useState(false);
     const [openInfo, setOpenInfo] = useState(false);
-    const [openWarning, setOpenWarning] = useState(false); // NUEVO ESTADO
+    const [openWarning, setOpenWarning] = useState(false);
 
     return (
         <div className="space-y-8 p-6">
@@ -70,7 +70,7 @@ export default function ModalsDemoPage() {
                 onClose={() => setOpenConfirm(false)}
                 type="confirm"
                 title="¿Eliminar Registro?"
-                message="Esta acción no se puede deshacer. Se perderán todos los datos vinculados."
+                message=""
                 confirmText="Sí, eliminar ahora"
                 onConfirm={() => {
                     console.log("Eliminado...");

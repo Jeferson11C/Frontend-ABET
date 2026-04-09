@@ -13,3 +13,4 @@ export * from './TextArea';
 export * from './Tabs';
 export * from './Toast';
 export * from './Skeleton';
+export * from './Typography';

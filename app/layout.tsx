@@ -19,6 +19,7 @@ import {
   HomeIcon,
   ChartBarIcon,
   TableCellsIcon,
+  Cog6ToothIcon
 } from '@heroicons/react/24/outline'
 
 const geistSans = Geist({
@@ -36,6 +37,7 @@ const navigation = [
   { name: 'Inicio', href: '/', icon: HomeIcon },
   { name: 'Gráficos', href: '/charts', icon: ChartBarIcon },
   { name: 'Tablas', href: '/tables', icon: TableCellsIcon },
+  { name: 'Pruebas', href: '/public', icon: Cog6ToothIcon }
 ]
 
 export default function RootLayout({
