@@ -14,3 +14,4 @@ export * from './Tabs';
 export * from './Toast';
 export * from './Skeleton';
 export * from './Typography';
+export * from './Navbar';
