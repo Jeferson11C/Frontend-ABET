@@ -29,7 +29,7 @@ export default function ModalsDemoPage() {
                 <Button onClick={() => setOpenInfo(true)} className="bg-zinc-400">Ver Info</Button>
             </div>
 
-            {/* 1. MODAL TIPO FORMULARIO */}
+            {/* MODAL TIPO FORMULARIO */}
             <Modal
                 isOpen={openForm}
                 onClose={() => setOpenForm(false)}
@@ -55,7 +55,7 @@ export default function ModalsDemoPage() {
                 </div>
             </Modal>
 
-            {/* 2. MODAL DE ÉXITO */}
+            {/* MODAL DE ÉXITO */}
             <FeedbackModal
                 isOpen={openSuccess}
                 onClose={() => setOpenSuccess(false)}
@@ -64,7 +64,7 @@ export default function ModalsDemoPage() {
                 message=""
             />
 
-            {/* 3. MODAL DE CONFIRMACIÓN */}
+            {/* MODAL DE CONFIRMACIÓN */}
             <FeedbackModal
                 isOpen={openConfirm}
                 onClose={() => setOpenConfirm(false)}
@@ -78,7 +78,7 @@ export default function ModalsDemoPage() {
                 }}
             />
 
-            {/* 4. MODAL DE ADVERTENCIA (Warning) */}
+            {/*  MODAL DE ADVERTENCIA (Warning) */}
             <FeedbackModal
                 isOpen={openWarning}
                 onClose={() => setOpenWarning(false)}
@@ -87,7 +87,7 @@ export default function ModalsDemoPage() {
                 message=""
             />
 
-            {/* 5. MODAL DE ERROR */}
+            {/*  MODAL DE ERROR */}
             <FeedbackModal
                 isOpen={openError}
                 onClose={() => setOpenError(false)}
@@ -97,7 +97,7 @@ export default function ModalsDemoPage() {
                 confirmText="Reintentar"
             />
 
-            {/* 6. MODAL DE INFORMACIÓN */}
+            {/*  MODAL DE INFORMACIÓN */}
             <FeedbackModal
                 isOpen={openInfo}
                 onClose={() => setOpenInfo(false)}

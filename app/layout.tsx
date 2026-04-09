@@ -12,7 +12,7 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarItem,
-  Navbar // Importamos tu nuevo Navbar
+  Navbar
 } from '@/shared/components/ui'
 
 import {
@@ -78,13 +78,10 @@ export default function RootLayout({
             </SidebarContent>
           </Sidebar>
 
-          {/* CONTENEDOR DERECHO: Navbar + Main Content */}
           <div className="flex flex-col flex-1 h-full overflow-hidden">
 
             {/* NAVBAR SUPERIOR */}
             <Navbar />
-
-            {/* ÁREA DE CONTENIDO: Con scroll independiente */}
             <main className="flex-1 p-8 overflow-y-auto bg-zinc-50/50">
               <div className="max-w-7xl mx-auto">
                 {children}

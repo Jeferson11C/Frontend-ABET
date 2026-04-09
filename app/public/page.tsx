@@ -12,13 +12,6 @@ import {
     Title,
     SubTitle
 } from '@/shared/components/ui'
-import {
-    BeakerIcon,
-    DocumentTextIcon,
-    AdjustmentsHorizontalIcon,
-    ArrowPathIcon,
-    BellAlertIcon
-} from '@heroicons/react/24/outline'
 
 export default function TestNewComponents() {
     // --- Estados para Pruebas ---
@@ -41,8 +34,7 @@ export default function TestNewComponents() {
     }
 
     return (
-        <div className="p-8 space-y-12 max-w-5xl mx-auto animate-in fade-in duration-700">
-            {/* --- CABECERA DE PÁGINA --- */}
+        <div className="p-2 space-y-12 max-w-5xl mx-auto animate-in fade-in duration-700">
             <Title
                 title="Componentes"
             />
@@ -131,7 +123,6 @@ export default function TestNewComponents() {
                     </Button>
                 </div>
 
-                {/* El Toast ahora es inteligente */}
                 <Toast
                     isOpen={toastState.open}
                     type={toastState.type}
