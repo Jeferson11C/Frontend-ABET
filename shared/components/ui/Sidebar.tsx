@@ -1,5 +1,6 @@
 'use client'
 import React, { createContext, useContext, useState } from 'react'
+import { ChevronRightIcon } from '@heroicons/react/20/solid'
 
 type SidebarContextType = {
     open: boolean
@@ -189,3 +190,44 @@ export function SidebarGroup({
         </div>
     )
 }
+
+export function SidebarNavGroup({
+  label,
+  icon,
+  defaultOpen = true,
+  active = false,
+  children,
+}: {
+  label: string
+  icon: React.ReactNode
+  defaultOpen?: boolean
+  active?: boolean
+  children?: React.ReactNode
+}) {
+  const { open } = useSidebar()
+  const [expanded, setExpanded] = useState(defaultOpen)
+
+  return (
+    <div className="space-y-1">
+      <button
+        type="button"
+        onClick={() => setExpanded((prev) => !prev)}
+        className={`w-full flex items-center gap-2 px-3 py-2 rounded-md transition-all text-sm font-semibold ${expanded || active ? 'text-white' : 'text-zinc-300'} hover:bg-zinc-800 hover:text-white`}
+      >
+        <span className={`h-5 w-5 flex items-center justify-center ${active ? 'text-red-500' : 'text-zinc-400'}`}>{icon}</span>
+        {open && <span className="flex-1 text-left">{label}</span>}
+        {open && (
+          <ChevronRightIcon className={`h-4 w-4 transition-transform ${expanded ? 'rotate-90 text-zinc-300' : 'text-zinc-500'}`} />
+        )}
+      </button>
+
+      {open && expanded && (
+        <div className="space-y-1">
+          {children}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default Sidebar

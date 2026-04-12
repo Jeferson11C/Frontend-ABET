@@ -24,3 +24,5 @@ export function Button({ variant = 'primary', size = 'md', className = '', ...pr
       <button className={`${base} ${sizes[size]} ${variants[variant]} ${className}`} {...props} />
   );
 }
+
+export default Button;

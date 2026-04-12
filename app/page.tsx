@@ -42,9 +42,9 @@ export default function ModalsDemoPage() {
     };
 
     return (
-        <div className="space-y-8 p-6">
-            <LoadingDialog isOpen={retryStatus === 'loading'} label="Reintentando ..." />
-            <LoadingDialog isOpen={isSaving} label="Guardando ..." />
+        <div className="space-y-8">
+            <LoadingDialog isOpen={retryStatus === 'loading'} label="Reintentando ..."/>
+            <LoadingDialog isOpen={isSaving} label="Guardando ..."/>
 
             <div>
                 <h1 className="text-3xl font-bold text-zinc-900 tracking-tight">Gestión de Modales</h1>
@@ -55,8 +55,11 @@ export default function ModalsDemoPage() {
                 {/* BOTONES DE ACTIVACIÓN */}
                 <Button onClick={() => setOpenForm(true)} className="bg-zinc-900">Abrir Formulario</Button>
                 <Button onClick={() => setOpenSuccess(true)} className="bg-red-600">Simular Éxito</Button>
-                <Button onClick={() => setOpenConfirm(true)} className="bg-zinc-100 !text-zinc-900 border border-zinc-200 shadow-sm">Confirmar Acción</Button>
-                <Button onClick={() => setOpenWarning(true)} className="bg-amber-500 hover:bg-amber-600 text-white">Ver Advertencia</Button>
+                <Button onClick={() => setOpenConfirm(true)}
+                        className="bg-zinc-100 !text-zinc-900 border border-zinc-200 shadow-sm">Confirmar
+                    Acción</Button>
+                <Button onClick={() => setOpenWarning(true)} className="bg-amber-500 hover:bg-amber-600 text-white">Ver
+                    Advertencia</Button>
                 <Button onClick={() => setOpenError(true)} className="bg-zinc-500">Simular Error</Button>
                 <Button onClick={() => setOpenInfo(true)} className="bg-zinc-400">Ver Info</Button>
             </div>
@@ -69,9 +72,9 @@ export default function ModalsDemoPage() {
                 title="Registrar Nuevo Alumno"
             >
                 <div className="grid grid-cols-1 gap-4">
-                    <Input label="Nombre completo" placeholder="Nombre y Apellido" required />
+                    <Input label="Nombre completo" placeholder="Nombre y Apellido" required/>
                     <div className="grid grid-cols-2 gap-4">
-                        <Input label="Código" placeholder="U202..." />
+                        <Input label="Código" placeholder="U202..."/>
                         <Select
                             label="Ciclo Actual"
                             placeholder="Seleccione ciclo"

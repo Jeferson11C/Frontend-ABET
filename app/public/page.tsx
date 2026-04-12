@@ -34,14 +34,14 @@ export default function TestNewComponents() {
     }
 
     return (
-        <div className="p-2 space-y-12 max-w-5xl mx-auto animate-in fade-in duration-700">
+        <div className="space-y-8">
             <Title
                 title="Componentes"
             />
 
             {/* --- TEST DE TABS --- */}
             <section className="space-y-4">
-                <SubTitle title="1. Navegación por Tabs" />
+                <SubTitle title="1. Navegación por Tabs"/>
                 <Card>
                     <Tabs tabs={tabOptions} activeTab={activeTab} onChange={setActiveTab}/>
                     <div className="py-6 text-sm text-zinc-600">
@@ -67,7 +67,7 @@ export default function TestNewComponents() {
 
                 {/* --- TEST DE SWITCH --- */}
                 <section className="space-y-4">
-                    <SubTitle title="3. Toogle" />
+                    <SubTitle title="3. Toogle"/>
                     <Card className="flex flex-col gap-6">
                         <Toggle
                             label="Estado de Acreditación"
@@ -98,7 +98,7 @@ export default function TestNewComponents() {
 
             {/* --- TEST DE TOAST --- */}
             <section className="space-y-4 pb-10">
-                <SubTitle title="5. Toast" />
+                <SubTitle title="5. Toast"/>
 
                 <div className="flex flex-wrap gap-4">
                     <Button

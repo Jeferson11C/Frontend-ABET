@@ -68,3 +68,5 @@ export function Toast({ isOpen, onClose, type = 'success', message }: ToastProps
         </div>
     )
 }
+
+export default Toast

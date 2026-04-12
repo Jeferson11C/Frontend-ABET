@@ -33,3 +33,5 @@ export function Toggle({ label, checked, onChange, description }: SwitchProps) {
         </div>
     )
 }
+
+export default Toggle

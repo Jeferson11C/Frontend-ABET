@@ -29,3 +29,5 @@ export function LoadingDialog({
     </Dialog>
   )
 }
+
+export default LoadingDialog

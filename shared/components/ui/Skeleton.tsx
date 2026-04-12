@@ -6,3 +6,5 @@ export function Skeleton({ className = "", ...props }: React.HTMLAttributes<HTML
         />
     )
 }
+
+export default Skeleton
