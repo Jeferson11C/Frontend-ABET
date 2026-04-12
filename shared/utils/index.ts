@@ -18,7 +18,6 @@
  * si sirve en varios contextos, puede vivir aquí.
  */
 
+export * from './cn'
 // export * from './format-date'
 // export * from './format-currency'
-
-export {}

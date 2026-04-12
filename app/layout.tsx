@@ -4,9 +4,8 @@ import React from 'react'
 import Link from 'next/link'
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
-
+import { SidebarProvider } from '@/providers'
 import {
-  SidebarProvider,
   Sidebar,
   SidebarHeader,
   SidebarContent,
@@ -52,15 +51,7 @@ export default function RootLayout({
 
           {/* SIDEBAR: Fijo a la izquierda */}
           <Sidebar className="bg-zinc-900 border-r border-zinc-700 text-zinc-100 shrink-0">
-            <SidebarHeader className="p-6 border-b border-zinc-800">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-red-900/20">
-                  A
-                </div>
-                <span className="font-bold text-lg tracking-tight text-white uppercase">
-                  UPC ABET
-                </span>
-              </div>
+            <SidebarHeader className="p-6 border-b border-white-800">
             </SidebarHeader>
 
             <SidebarContent className="mt-4 px-2">

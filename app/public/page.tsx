@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import {
     Card,
-    Switch,
+    Toggle,
     TextArea,
     Tabs,
     Toast,
@@ -69,7 +69,7 @@ export default function TestNewComponents() {
                 <section className="space-y-4">
                     <SubTitle title="3. Toogle" />
                     <Card className="flex flex-col gap-6">
-                        <Switch
+                        <Toggle
                             label="Estado de Acreditación"
                             description="Activar para marcar este resultado como CUMPLIDO."
                             checked={switchEnabled}

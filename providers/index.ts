@@ -17,9 +17,4 @@
  * esta carpeta centraliza contextos/proveedores globales.
  */
 
-// export * from './app-providers'
-// export * from './theme-provider'
-// export * from './session-provider'
-// export * from './query-provider'
-
-export {}
+export * from './sidebar-provider'

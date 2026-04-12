@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Input, Select, Modal, FeedbackModal } from '@/shared/components/ui';
+import { Button, Input, Select, LoadingDialog, ErrorDialog, SuccessDialog, WarningDialog, InfoDialog, ConfirmDialog, FormDialog } from '@/shared/components/ui';
 
 export default function ModalsDemoPage() {
     // Estados para cada tipo de modal
@@ -11,9 +11,41 @@ export default function ModalsDemoPage() {
     const [openConfirm, setOpenConfirm] = useState(false);
     const [openInfo, setOpenInfo] = useState(false);
     const [openWarning, setOpenWarning] = useState(false);
+    const [retryStatus, setRetryStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
+    const [isSaving, setIsSaving] = useState(false);
+
+    const handleRetry = () => {
+        setOpenError(false);
+        setRetryStatus('loading');
+
+        setTimeout(() => {
+            const didFail = Math.random() < 0.5;
+
+            if (didFail) {
+                setRetryStatus('error');
+                setOpenError(true);
+                return;
+            }
+
+            setRetryStatus('success');
+        }, 1200);
+    };
+
+    const handleSubmitForm = () => {
+        setIsSaving(true);
+
+        setTimeout(() => {
+            setIsSaving(false);
+            setOpenForm(false);
+            setOpenSuccess(true);
+        }, 1200);
+    };
 
     return (
         <div className="space-y-8 p-6">
+            <LoadingDialog isOpen={retryStatus === 'loading'} label="Reintentando ..." />
+            <LoadingDialog isOpen={isSaving} label="Guardando ..." />
+
             <div>
                 <h1 className="text-3xl font-bold text-zinc-900 tracking-tight">Gestión de Modales</h1>
                 <p className="text-zinc-500">Prueba las diferentes interacciones del sistema.</p>
@@ -30,17 +62,11 @@ export default function ModalsDemoPage() {
             </div>
 
             {/* MODAL TIPO FORMULARIO */}
-            <Modal
+            <FormDialog
                 isOpen={openForm}
                 onClose={() => setOpenForm(false)}
+                onSubmit={handleSubmitForm}
                 title="Registrar Nuevo Alumno"
-                size="md"
-                footer={
-                    <div className="flex gap-2">
-                        <Button onClick={() => setOpenForm(false)} className="bg-zinc-100 !text-zinc-900">Cancelar</Button>
-                        <Button onClick={() => {setOpenForm(false); setOpenSuccess(true)}} className="bg-red-600">Guardar Registro</Button>
-                    </div>
-                }
             >
                 <div className="grid grid-cols-1 gap-4">
                     <Input label="Nombre completo" placeholder="Nombre y Apellido" required />
@@ -53,55 +79,44 @@ export default function ModalsDemoPage() {
                         />
                     </div>
                 </div>
-            </Modal>
+            </FormDialog>
 
-            {/* MODAL DE ÉXITO */}
-            <FeedbackModal
+            <SuccessDialog
                 isOpen={openSuccess}
                 onClose={() => setOpenSuccess(false)}
-                type="success"
-                title="¡Registro Exitoso!"
+                title="Confirmación"
                 message=""
             />
 
-            {/* MODAL DE CONFIRMACIÓN */}
-            <FeedbackModal
+            <ConfirmDialog
                 isOpen={openConfirm}
                 onClose={() => setOpenConfirm(false)}
-                type="confirm"
-                title="¿Eliminar Registro?"
                 message=""
-                confirmText="Sí, eliminar ahora"
                 onConfirm={() => {
                     console.log("Eliminado...");
                     setOpenConfirm(false);
                 }}
+                onDecline={() => setOpenConfirm(false)}
             />
 
-            {/*  MODAL DE ADVERTENCIA (Warning) */}
-            <FeedbackModal
+            <WarningDialog
                 isOpen={openWarning}
                 onClose={() => setOpenWarning(false)}
-                type="warning"
-                title="Aviso Relevante"
                 message=""
+                onConfirm={() => setOpenWarning(false)}
+                onDecline={() => setOpenWarning(false)}
             />
 
-            {/*  MODAL DE ERROR */}
-            <FeedbackModal
+            <ErrorDialog
                 isOpen={openError}
                 onClose={() => setOpenError(false)}
-                type="error"
-                title="Error de Conexión"
                 message=""
-                confirmText="Reintentar"
+                onConfirm={handleRetry}
             />
 
-            {/*  MODAL DE INFORMACIÓN */}
-            <FeedbackModal
+            <InfoDialog
                 isOpen={openInfo}
                 onClose={() => setOpenInfo(false)}
-                type="info"
                 title="Guía de Usuario"
                 message=""
             />
