@@ -2,7 +2,7 @@
 import { useState, useMemo } from 'react'
 import { Card, Input, Select, Button, DataTable } from '@/shared/components/ui'
 import { PlusIcon } from '@heroicons/react/24/outline'
-import { columns } from './columns'
+import { columns, Alumno } from './columns'
 
 export default function TablesPage() {
     const [search, setSearch] = useState('')
@@ -38,26 +38,27 @@ export default function TablesPage() {
             <Card>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <Input
-                        label="Filtro rápido"
                         placeholder="Buscar por ID o Nombre..."
                         onChange={(e) => setSearch(e.target.value)}
                     />
                     <Select
-                        label="Categoría"
                         placeholder="Todos los cursos"
                         options={[
                             { label: 'Matemática', value: 'Matemática' },
                             { label: 'Comunicación', value: 'Comunicación' },
                             { label: 'Historia', value: 'Historia' }
                         ]}
-                        onChange={(e) => setCategoria(e.target.value)}
+                        onChange={(_, selected) => {
+                            const selectedValue = Array.isArray(selected) ? '' : selected?.value
+                            setCategoria(selectedValue ? String(selectedValue) : '')
+                        }}
                     />
                 </div>
 
                 {/* Llamamos al motor con el diseño que pediste */}
-                <DataTable
+                <DataTable<Alumno>
                     columns={columns}
-                    data={filteredData}
+                    data={filteredData as Alumno[]}
                     pageSize={5}
                 />
             </Card>

@@ -1,87 +1,154 @@
-'use client';
-import React, { forwardRef, useId } from 'react';
+'use client'
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-    label?: string;
-    error?: string;
-    options: { label: string; value: string | number }[];
-    placeholder?: string;
+import React, { useMemo, useState } from 'react'
+import SelectBase from 'react-select'
+import CreatableSelect from 'react-select/creatable'
+
+type OptionItem = {
+    label: string
+    value: string | number
+    name?: string
+    isNew?: boolean
 }
 
-export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-    ({ label, error, options, className = "", placeholder, ...props }, ref) => {
-        const id = useId();
+export interface SelectProps {
+    name?: string
+    value?: OptionItem | OptionItem[] | null
+    options: Array<OptionItem | { id?: string | number; value?: string | number; name?: string; label?: string }>
+    label?: string
+    error?: string
+    isMulti?: boolean
+    isSearchable?: boolean
+    isClearable?: boolean
+    isDisabled?: boolean
+    isCreatable?: boolean
+    maxLength?: number | null
+    placeholder?: string
+    onChange?: (name: string | undefined, value: OptionItem | OptionItem[] | null) => void
+    onInputChange?: (value: string) => void
+}
 
-        return (
-            <div className="flex flex-col w-full">
-                {/* LABEL: font-medium text-xs mb-2 */}
-                {label && (
-                    <label
-                        htmlFor={id}
-                        className="font-medium text-xs mb-2 text-zinc-700 select-none"
-                    >
-                        {label}
-                        {props.required && <span className="text-red-500 ml-1">*</span>}
-                    </label>
-                )}
-
-                <div className="relative group">
-                    <select
-                        id={id}
-                        ref={ref}
-                        className={`
-                            /* Estilos base */
-                            w-full px-3 py-2 text-sm rounded-md border outline-none transition-all
-                            bg-white text-zinc-900 appearance-none cursor-pointer
-                            
-                            /* Diseño solicitado: Borde Rojo Primario */
-                            border-red-600 focus:border-red-700 focus:ring-4 focus:ring-red-100
-                            
-                            /* Estado deshabilitado */
-                            disabled:bg-gray-100 disabled:text-gray-600 disabled:cursor-not-allowed
-                            
-                            /* Estado de error */
-                            ${error ? "border-red-500 ring-2 ring-red-500/20" : ""}
-                            
-                            ${className}
-                        `}
-                        {...props}
-                    >
-                        {placeholder && (
-                            <option value="" disabled hidden>
-                                {placeholder}
-                            </option>
-                        )}
-                        {options.map((opt) => (
-                            <option key={opt.value} value={opt.value} className="bg-white text-zinc-900">
-                                {opt.label}
-                            </option>
-                        ))}
-                    </select>
-
-                    {/* FLECHA PERSONALIZADA (Solo Tailwind) */}
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-red-600 group-focus-within:rotate-180 transition-transform duration-200">
-                        <svg
-                            className="h-4 w-4 fill-current"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                        >
-                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                        </svg>
-                    </div>
-                </div>
-
-                {/* ERROR O HELPER TEXT */}
-                {error && (
-                    <p className="font-medium text-xs mt-2 text-red-500 italic leading-none">
-                        {error}
-                    </p>
-                )}
-            </div>
-        );
+const getCodeFromName = (item: { name?: string; label?: string; value?: string | number; id?: string | number }) => {
+    const raw = item?.name ?? item?.label ?? ''
+    if (raw.trim() === '') {
+        return String(item?.value ?? item?.id ?? '')
     }
-);
+    const name = raw.trim()
+    if (name.includes(' - ')) return name.split(' - ')[0].trim()
+    const firstToken = name.split(' ')[0]
+    return firstToken || name
+}
 
-Select.displayName = "Select";
+export function Select({
+    name,
+    value,
+    options,
+    label,
+    error,
+    isMulti = false,
+    isSearchable = false,
+    isClearable = false,
+    isDisabled = false,
+    isCreatable = false,
+    maxLength = null,
+    placeholder,
+    onChange,
+    onInputChange,
+}: SelectProps) {
+    const [inputValue, setInputValue] = useState('')
+    const selectId = React.useId()
 
-export default Select;
+    const formattedOptions = useMemo<OptionItem[]>(() => {
+        return options.map((item) => {
+            const raw = item as { id?: string | number; value?: string | number; name?: string; label?: string }
+            return {
+                label: getCodeFromName(raw),
+                value: raw.id ?? raw.value ?? '',
+                name: raw.name ?? raw.label,
+            }
+        })
+    }, [options])
+
+    const handleChange = (selected: OptionItem | OptionItem[] | null) => {
+        setInputValue('')
+        onChange?.(name, selected)
+    }
+
+    const handleInputChange = (newValue: string) => {
+        if (maxLength && newValue.length > maxLength) return
+        setInputValue(newValue)
+        onInputChange?.(newValue)
+    }
+
+    const handleCreateOption = (newValue: string) => {
+        if (maxLength && newValue.length > maxLength) return
+        const newOption: OptionItem = { label: newValue, value: newValue, isNew: true }
+        onChange?.(name, newOption)
+        setInputValue('')
+    }
+
+    const selectStyles = {
+        control: (base: any, state: any) => ({
+            ...base,
+            minHeight: 40,
+            borderRadius: 6,
+            borderColor: error ? '#ef4444' : state.isFocused ? '#dc2626' : '#e4e4e7',
+            boxShadow: 'none',
+            ':hover': {
+                borderColor: state.isFocused ? '#dc2626' : '#d4d4d8',
+            },
+        }),
+        menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
+        option: (base: any, state: any) => ({
+            ...base,
+            backgroundColor: state.isSelected ? '#dc2626' : state.isFocused ? '#fee2e2' : 'white',
+            color: state.isSelected ? 'white' : '#111827',
+        }),
+    }
+
+    const commonProps = {
+        inputId: selectId,
+        instanceId: selectId,
+        value,
+        options: formattedOptions,
+        inputValue,
+        isMulti,
+        isSearchable,
+        isClearable,
+        isDisabled,
+        placeholder: placeholder || (label ? `Seleccione ${label.toLowerCase()}` : 'Seleccione una opcion'),
+        menuPortalTarget: typeof document !== 'undefined' ? document.body : undefined,
+        menuPosition: 'fixed' as const,
+        styles: selectStyles,
+        onChange: handleChange,
+        onInputChange: handleInputChange,
+    }
+
+    return (
+        <div className="flex flex-col w-full">
+            {label && (
+                <label className="font-medium text-xs mb-2 text-zinc-700 select-none">
+                    {label}
+                </label>
+            )}
+
+            {isCreatable ? (
+                <CreatableSelect
+                    {...commonProps}
+                    onCreateOption={handleCreateOption}
+                    formatCreateLabel={(val: string) => `Crear: "${val}"`}
+                />
+            ) : (
+                <SelectBase {...commonProps} />
+            )}
+
+            {error && (
+                <p className="font-medium text-xs mt-2 text-red-500 italic leading-none">
+                    {error}
+                </p>
+            )}
+        </div>
+    )
+}
+
+export default Select

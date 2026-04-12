@@ -33,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             bg-white text-zinc-900 
             placeholder:text-zinc-400
             /* Diseño solicitado: border-red-600 (primary) */
-            border-red-600 focus:border-red-700 focus:ring-2 focus:ring-red-100
+            border-zinc-200 focus:border-red-700 
             disabled:bg-gray-100 disabled:text-gray-600 disabled:cursor-not-allowed
             ${error ? "border-red-500 ring-2 ring-red-500/20" : ""}
             ${className}

@@ -81,7 +81,7 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
     )
 }
 
-// --- 2. MOTOR DATA TABLE INTEGRADO (DataTable) ---
+// MOTOR DATA TABLE ---
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -146,7 +146,7 @@ export function DataTable<TData, TValue>({
                 </TableBody>
             </Table>
 
-            {/* PAGINACIÓN CENTRADA (Diseño solicitado) */}
+            {/* PAGINACIÓN */}
             <div className="flex items-center justify-center gap-4 py-4">
                 <Button
                     variant="outline"
