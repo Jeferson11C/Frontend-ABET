@@ -8,7 +8,7 @@ interface SwitchProps {
     description?: string;
 }
 
-export function Toggle({ label, checked, onChange, description }: SwitchProps) {
+function Toggle({ label, checked, onChange, description }: SwitchProps) {
     return (
         <div className="flex items-center justify-between gap-4">
             {(label || description) && (
@@ -34,4 +34,4 @@ export function Toggle({ label, checked, onChange, description }: SwitchProps) {
     )
 }
 
-export default Toggle
+export {Toggle};

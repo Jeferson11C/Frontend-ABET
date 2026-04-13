@@ -39,7 +39,7 @@ const toastConfig = {
     }
 }
 
-export function Toast({ isOpen, onClose, type = 'success', message }: ToastProps) {
+function Toast({ isOpen, onClose, type = 'success', message }: ToastProps) {
     if (!isOpen) return null;
 
     const { icon: Icon, iconColor, defaultMessage } = toastConfig[type];
@@ -69,4 +69,4 @@ export function Toast({ isOpen, onClose, type = 'success', message }: ToastProps
     )
 }
 
-export default Toast
+export {Toast}

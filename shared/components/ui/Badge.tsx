@@ -9,7 +9,7 @@ interface BadgeProps {
     className?: string
 }
 
-export function Badge({children, variant = 'default', className}: BadgeProps) {
+function Badge({children, variant = 'default', className}: BadgeProps) {
     const variants = {
         default: 'bg-zinc-100 text-zinc-700',
         danger: 'bg-red-100 text-red-700',
@@ -25,4 +25,4 @@ export function Badge({children, variant = 'default', className}: BadgeProps) {
     );
 }
 
-export default Badge;
+export {Badge};

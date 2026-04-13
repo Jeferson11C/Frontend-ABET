@@ -33,7 +33,7 @@ export function useSidebar() {
     return ctx
 }
 
-export function Sidebar({
+function Sidebar({
                             children,
                             className = '',
                             overlay = true,
@@ -230,4 +230,4 @@ export function SidebarNavGroup({
   )
 }
 
-export default Sidebar
+export {Sidebar}

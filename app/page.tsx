@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Input, Select, LoadingDialog, ErrorDialog, SuccessDialog, WarningDialog, InfoDialog, ConfirmDialog, FormDialog } from '@/shared/components/ui';
+import { Button, Input, Select, LoadingDialog, ErrorDialog, SuccessDialog, WarningDialog, InfoDialog, ConfirmDialog, FormDialog, HoverCard, HoverCardContent, HoverCardTrigger, Checkbox} from '@/shared/components/ui';
+import { Field, FieldGroup, FieldLabel} from "@/shared/components/ui/field";
 
 export default function ModalsDemoPage() {
     // Estados para cada tipo de modal
@@ -123,6 +124,24 @@ export default function ModalsDemoPage() {
                 title="Guía de Usuario"
                 message=""
             />
+
+            <div className="rounded-lg border border-zinc-200 bg-white p-6">
+                <h2 className="text-lg font-semibold text-zinc-900">Elementos UI</h2>
+                <div className="mt-4 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-10">
+                    <HoverCard openDelay={10} closeDelay={100}>
+                        <HoverCardTrigger asChild>
+                            <Button variant="ghost" className="text-red-600 hover:text-red-700">
+                                Hover aqui
+                            </Button>
+                        </HoverCardTrigger>
+                        <HoverCardContent className="flex flex-col gap-3">
+                            <div className="text-sm text-zinc-700">
+                                Lista de alumnos matriculados al 202-01.
+                            </div>
+                        </HoverCardContent>
+                    </HoverCard>
+                </div>
+            </div>
 
         </div>
     );

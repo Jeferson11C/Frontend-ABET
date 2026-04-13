@@ -29,4 +29,3 @@ export const SubTitle = ({ title, icon, className = "" }: TitleProps) => {
     )
 }
 
-export default Title

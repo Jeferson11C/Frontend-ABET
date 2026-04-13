@@ -39,7 +39,7 @@ const getCodeFromName = (item: { name?: string; label?: string; value?: string |
     return firstToken || name
 }
 
-export function Select({
+function Select({
     name,
     value,
     options,
@@ -151,4 +151,4 @@ export function Select({
     )
 }
 
-export default Select
+export {Select}

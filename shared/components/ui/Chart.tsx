@@ -90,4 +90,3 @@ export function ChartLegendContent({ payload }: any) {
 export const ChartTooltip = Tooltip
 export const ChartLegend = Legend
 
-export default ChartContainer

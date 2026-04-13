@@ -7,7 +7,7 @@ import {
     MagnifyingGlassIcon
 } from '@heroicons/react/24/outline'
 
-export function Navbar() {
+function Navbar() {
     return (
         <nav className="h-16 border-b border-zinc-200 bg-white px-8 flex items-center justify-between sticky top-0 z-30">
 
@@ -33,4 +33,4 @@ export function Navbar() {
     )
 }
 
-export default Navbar
+export {Navbar}

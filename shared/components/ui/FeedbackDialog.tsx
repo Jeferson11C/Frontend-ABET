@@ -242,4 +242,3 @@ export function ConfirmDialog({
     )
 }
 
-export default FormDialog

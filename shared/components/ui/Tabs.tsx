@@ -12,7 +12,7 @@ interface TabsProps {
     onChange: (id: string) => void;
 }
 
-export function Tabs({ tabs, activeTab, onChange }: TabsProps) {
+function Tabs({ tabs, activeTab, onChange }: TabsProps) {
     return (
         <div className="border-b border-zinc-200">
             <nav className="-mb-px flex space-x-8" aria-label="Tabs">
@@ -35,4 +35,4 @@ export function Tabs({ tabs, activeTab, onChange }: TabsProps) {
     )
 }
 
-export default Tabs
+export {Tabs}

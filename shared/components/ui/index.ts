@@ -16,3 +16,7 @@ export * from './Skeleton';
 export * from './Typography';
 export * from './Navbar';
 export * from './LoadingDialog';
+export * from './checkbox';
+export * from './hover-card';
+export * from './label';
+export * from './separator';

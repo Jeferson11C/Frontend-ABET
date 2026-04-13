@@ -9,7 +9,7 @@ type LoadingModalProps = {
   onClose?: () => void
 }
 
-export function LoadingDialog({
+function LoadingDialog({
   isOpen,
   label = 'Cargando ...',
   onClose,
@@ -30,4 +30,4 @@ export function LoadingDialog({
   )
 }
 
-export default LoadingDialog
+export {LoadingDialog}

@@ -8,7 +8,7 @@ interface CardProps {
   className?: string;
 }
 
-export function Card({ title, children, description, className = "" }: CardProps) {
+function Card({ title, children, description, className = "" }: CardProps) {
   return (
     <div className={`bg-white border border-zinc-200 rounded-xl shadow-sm overflow-hidden ${className}`}>
       {(title || description) && (
@@ -24,4 +24,4 @@ export function Card({ title, children, description, className = "" }: CardProps
   );
 }
 
-export default Card;
+export {Card};

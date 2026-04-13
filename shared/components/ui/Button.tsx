@@ -7,7 +7,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: 'sm' | 'md' | 'lg';
 };
 
-export function Button({ variant = 'primary', size = 'md', className = '', ...props }: ButtonProps) {
+function Button({ variant = 'primary', size = 'md', className = '', ...props }: ButtonProps) {
   const base = 'inline-flex items-center justify-center rounded-md font-medium transition cursor-pointer';
   const sizes: Record<string, string> = {
     sm: 'px-2 py-1 text-sm',
@@ -25,4 +25,4 @@ export function Button({ variant = 'primary', size = 'md', className = '', ...pr
   );
 }
 
-export default Button;
+export {Button};
