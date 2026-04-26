@@ -7,7 +7,7 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { cn } from "@/lib/utils"
+import { cn } from "@/shared/lib/utils"
 import { Button } from "./Button"
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {

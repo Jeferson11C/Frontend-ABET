@@ -11,6 +11,8 @@ type OptionItem = {
     isNew?: boolean
 }
 
+type SelectSize = 'sm' | 'md'
+
 export interface SelectProps {
     name?: string
     value?: OptionItem | OptionItem[] | null
@@ -24,6 +26,7 @@ export interface SelectProps {
     isCreatable?: boolean
     maxLength?: number | null
     placeholder?: string
+    size?: SelectSize
     onChange?: (name: string | undefined, value: OptionItem | OptionItem[] | null) => void
     onInputChange?: (value: string) => void
 }
@@ -52,6 +55,7 @@ function Select({
     isCreatable = false,
     maxLength = null,
     placeholder,
+    size = 'md',
     onChange,
     onInputChange,
 }: SelectProps) {
@@ -87,16 +91,38 @@ function Select({
         setInputValue('')
     }
 
+    const controlHeight = size === 'sm' ? 32 : 40
+    const fontSize = size === 'sm' ? 12 : 14
+    const paddingY = size === 'sm' ? 2 : 6
+    const paddingX = size === 'sm' ? 8 : 10
+
     const selectStyles = {
         control: (base: any, state: any) => ({
             ...base,
-            minHeight: 40,
+            minHeight: controlHeight,
             borderRadius: 6,
             borderColor: error ? '#ef4444' : state.isFocused ? '#dc2626' : '#e4e4e7',
             boxShadow: 'none',
+            fontSize,
             ':hover': {
                 borderColor: state.isFocused ? '#dc2626' : '#d4d4d8',
             },
+        }),
+        valueContainer: (base: any) => ({
+            ...base,
+            paddingTop: paddingY,
+            paddingBottom: paddingY,
+            paddingLeft: paddingX,
+            paddingRight: paddingX,
+        }),
+        input: (base: any) => ({
+            ...base,
+            margin: 0,
+            padding: 0,
+        }),
+        indicatorsContainer: (base: any) => ({
+            ...base,
+            minHeight: controlHeight,
         }),
         menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
         option: (base: any, state: any) => ({

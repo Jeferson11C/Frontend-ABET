@@ -17,4 +17,5 @@
  * esta carpeta centraliza contextos/proveedores globales.
  */
 
+export * from './locale-provider'
 export * from './sidebar-provider'

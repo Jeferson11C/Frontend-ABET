@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Input, Select, LoadingDialog, ErrorDialog, SuccessDialog, WarningDialog, InfoDialog, ConfirmDialog, FormDialog, HoverCard, HoverCardContent, HoverCardTrigger, Checkbox} from '@/shared/components/ui';
-import { Field, FieldGroup, FieldLabel} from "@/shared/components/ui/field";
+import { Button, Input, Select, LoadingDialog, ErrorDialog, SuccessDialog, WarningDialog, InfoDialog, ConfirmDialog, FormDialog, HoverCard, HoverCardContent, HoverCardTrigger} from '@/shared/components/ui';
 
 export default function ModalsDemoPage() {
     // Estados para cada tipo de modal
@@ -53,16 +52,13 @@ export default function ModalsDemoPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {/* BOTONES DE ACTIVACIÓN */}
-                <Button onClick={() => setOpenForm(true)} className="bg-zinc-900">Abrir Formulario</Button>
-                <Button onClick={() => setOpenSuccess(true)} className="bg-red-600">Simular Éxito</Button>
-                <Button onClick={() => setOpenConfirm(true)}
-                        className="bg-zinc-100 !text-zinc-900 border border-zinc-200 shadow-sm">Confirmar
-                    Acción</Button>
-                <Button onClick={() => setOpenWarning(true)} className="bg-amber-500 hover:bg-amber-600 text-white">Ver
-                    Advertencia</Button>
-                <Button onClick={() => setOpenError(true)} className="bg-zinc-500">Simular Error</Button>
-                <Button onClick={() => setOpenInfo(true)} className="bg-zinc-400">Ver Info</Button>
+                {/* BOTONES DE ACTIVACION */}
+                <Button onClick={() => setOpenForm(true)} variant="dark">Abrir Formulario</Button>
+                <Button onClick={() => setOpenSuccess(true)} variant="primary">Simular Exito</Button>
+                <Button onClick={() => setOpenConfirm(true)} variant="surface">Confirmar Accion</Button>
+                <Button onClick={() => setOpenWarning(true)} variant="warning">Ver Advertencia</Button>
+                <Button onClick={() => setOpenError(true)} variant="neutral">Simular Error</Button>
+                <Button onClick={() => setOpenInfo(true)} variant="info">Ver Info</Button>
             </div>
 
             {/* MODAL TIPO FORMULARIO */}
@@ -88,7 +84,6 @@ export default function ModalsDemoPage() {
             <SuccessDialog
                 isOpen={openSuccess}
                 onClose={() => setOpenSuccess(false)}
-                title="Confirmación"
                 message=""
             />
 

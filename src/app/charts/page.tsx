@@ -3,7 +3,7 @@ import { ABETCompetenciesChart } from "./ABETCompetenciesChart"
 import { ABETGraduationPie } from "./ABETGraduationPie"
 import { ABETHistoricalTrend } from "./ABETHistoricalTrend"
 import { ABETProjectAssessment } from "./ABETProjectAssessment"
-import { Card, Badge } from '@/shared/components/ui'
+import { Badge } from '@/shared/components/ui'
 
 export default function ABETDashboardPage() {
     return (

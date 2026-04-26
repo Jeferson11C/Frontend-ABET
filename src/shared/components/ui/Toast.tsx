@@ -6,6 +6,7 @@ import {
     InformationCircleIcon,
     XMarkIcon
 } from '@heroicons/react/24/solid'
+import { useI18n } from '@/providers'
 
 type ToastType = 'success' | 'error' | 'warning' | 'info'
 
@@ -14,35 +15,44 @@ interface ToastProps {
     onClose: () => void;
     type?: ToastType;
     message?: string;
+    title?: string;
 }
 
 const toastConfig = {
     success: {
         icon: CheckCircleIcon,
         iconColor: 'text-emerald-500',
-        defaultMessage: '¡Operación completada con éxito!',
+        titleKey: 'toast.title.success',
+        messageKey: 'toast.message.success',
     },
     error: {
         icon: XCircleIcon,
         iconColor: 'text-red-500',
-        defaultMessage: 'Hubo un error al procesar la solicitud.',
+        titleKey: 'toast.title.error',
+        messageKey: 'toast.message.error',
     },
     warning: {
         icon: ExclamationTriangleIcon,
         iconColor: 'text-amber-500',
-        defaultMessage: 'Atención: Revisa los datos ingresados.',
+        titleKey: 'toast.title.warning',
+        messageKey: 'toast.message.warning',
     },
     info: {
         icon: InformationCircleIcon,
         iconColor: 'text-blue-500',
-        defaultMessage: 'Nueva actualización disponible en el sistema.',
+        titleKey: 'toast.title.info',
+        messageKey: 'toast.message.info',
     }
 }
 
-function Toast({ isOpen, onClose, type = 'success', message }: ToastProps) {
+function Toast({ isOpen, onClose, type = 'success', message, title }: ToastProps) {
+    const { t } = useI18n()
+
     if (!isOpen) return null;
 
-    const { icon: Icon, iconColor, defaultMessage } = toastConfig[type];
+    const { icon: Icon, iconColor, titleKey, messageKey } = toastConfig[type];
+    const resolvedTitle = title !== undefined ? title : t(titleKey)
+    const resolvedMessage = message !== undefined ? message : t(messageKey)
 
     return (
         <div className="fixed bottom-5 right-5 z-[200] animate-in slide-in-from-right duration-300">
@@ -51,15 +61,16 @@ function Toast({ isOpen, onClose, type = 'success', message }: ToastProps) {
 
                 <div className="flex-1">
                     <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-                        {type === 'success' ? 'Éxito' : type === 'error' ? 'Error' : 'Aviso'}
+                        {resolvedTitle}
                     </p>
                     <p className="text-sm font-medium">
-                        {message || defaultMessage}
+                        {resolvedMessage}
                     </p>
                 </div>
 
                 <button
                     onClick={onClose}
+                    aria-label={t('toast.close')}
                     className="ml-2 hover:bg-zinc-800 p-1.5 rounded-lg transition-colors text-zinc-500 hover:text-white"
                 >
                     <XMarkIcon className="h-5 w-5" />

@@ -20,4 +20,7 @@
  * app solo orquesta pantallas y conecta módulos.
  */
 
-export {}
+export * from './auth'
+export * from './ifc'
+export * from './reportes'
+export * from './rubricas'

@@ -6,6 +6,7 @@ import { XCircleIcon } from '@heroicons/react/24/outline';
 
 import { cn } from "@/shared/utils"
 import { Button } from '@/shared/components/ui';
+import { useI18n } from '@/providers'
 
 const mergeClassName = <T,>(
     base: string,
@@ -58,6 +59,8 @@ function DialogContent({
     children?: React.ReactNode
     showCloseButton?: boolean
 }) {
+    const { t } = useI18n()
+
     return (
         <DialogPortal>
             <DialogOverlay />
@@ -78,7 +81,7 @@ function DialogContent({
                         >
                             {children}
                             {showCloseButton && (
-                                <DialogPrimitive.Close data-slot="dialog-close" render={<Button variant="ghost" size="sm" className="absolute top-2 right-2 p-1.5"><XCircleIcon /><span className="sr-only">Close</span></Button>} />
+                                <DialogPrimitive.Close data-slot="dialog-close" render={<Button variant="ghost" size="sm" className="absolute top-2 right-2 p-1.5"><XCircleIcon /><span className="sr-only">{t('dialog.close')}</span></Button>} />
                             )}
                         </div>
                     )
@@ -106,6 +109,8 @@ function DialogFooter({
                       }: React.ComponentProps<"div"> & {
     showCloseButton?: boolean
 }) {
+    const { t } = useI18n()
+
     return (
         <div
             data-slot="dialog-footer"
@@ -117,7 +122,7 @@ function DialogFooter({
         >
             {children}
             {showCloseButton && (
-                <DialogPrimitive.Close render={<Button variant="secondary">Close</Button>} />
+                <DialogPrimitive.Close render={<Button variant="secondary">{t('dialog.close')}</Button>} />
             )}
         </div>
     )

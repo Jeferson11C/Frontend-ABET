@@ -13,6 +13,4 @@
  * - constantes específicas de auth o sales
  */
 
-// export * from './app.constants'
-
-export {}
+export * from './app'

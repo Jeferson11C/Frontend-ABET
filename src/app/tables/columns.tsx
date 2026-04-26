@@ -1,8 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Badge } from "@/shared/components/ui/Badge"
-import { Button } from "@/shared/components/ui/Button"
+import { Badge, Button } from "@/shared/components"
 import { PencilIcon, EyeIcon } from "lucide-react"
 
 export type Alumno = {

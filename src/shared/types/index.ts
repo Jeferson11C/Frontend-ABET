@@ -13,7 +13,4 @@
  * - tipos exclusivos de auth
  */
 
-// export * from './api-response'
-// export * from './pagination'
-
-export {}
+export * from './api'
