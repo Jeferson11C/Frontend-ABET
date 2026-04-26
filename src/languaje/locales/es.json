@@ -1,9 +1,12 @@
 {
   "nav.home": "Inicio",
+  "welcome": "Bienvenido a ABET.",
   "nav.views": "Vistas",
   "nav.charts": "Graficos",
   "nav.tables": "Tablas",
   "nav.tests": "Pruebas",
+  "nav.modals": "Modales",
+  "nav.public": "Publico",
   "navbar.user": "Usuario ABET",
   "navbar.openMenu": "Abrir menu",
   "language.es": "ES",

@@ -21,6 +21,5 @@
  */
 
 export * from './auth'
-export * from './ifc'
-export * from './reportes'
 export * from './rubricas'
+export * from './tests'

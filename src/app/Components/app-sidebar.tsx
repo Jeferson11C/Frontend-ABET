@@ -14,7 +14,6 @@ import {
 } from '@/shared/components'
 import {
   HomeIcon,
-  ChartBarIcon,
   Cog6ToothIcon,
   ArrowRightStartOnRectangleIcon,
 } from '@heroicons/react/24/outline'
@@ -39,16 +38,20 @@ export function AppSidebar() {
   const isActive = (href?: string) => (href ? pathname === href : false)
 
   const navigation: NavItem[] = [
+
     { name: t('nav.home'), href: '/', icon: HomeIcon },
+
     {
-      name: t('nav.views'),
-      icon: ChartBarIcon,
+      name: t('nav.tests'),
+      icon: Cog6ToothIcon,
       children: [
-        { name: t('nav.charts'), href: '/charts' },
-        { name: t('nav.tables'), href: '/tables' },
+        { name: t('nav.modals'), href: '/tests/modals' },
+        { name: t('nav.charts'), href: '/tests/charts' },
+        { name: t('nav.tables'), href: '/tests/tables' },
+        { name: t('nav.public'), href: '/tests/public' },
       ],
     },
-    { name: t('nav.tests'), href: '/public', icon: Cog6ToothIcon },
+
   ]
 
   return (
