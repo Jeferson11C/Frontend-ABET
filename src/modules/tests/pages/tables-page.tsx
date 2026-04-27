@@ -19,27 +19,25 @@ export default function TablesPage() {
   const data = useMemo(() => allData, [])
 
   return (
-    <div className="space-y-6">
-      <Card>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" />
+      <div className="space-y-6">
+        <Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" />
 
-        <DataTable<Alumno>
-          columns={columns}
-          data={data as Alumno[]}
-          pageSize={5}
-          searchPlaceholder="Buscar por ID, alumno o curso..."
-          actions={[
-            {
-              label: 'Nuevo',
-              onClick: handleNew,
-              icon: <PlusIcon className="h-4 w-4" />,
-              buttonProps: {
-                className: 'bg-red-600 text-white hover:bg-red-700 h-10 px-4',
-              },
-            },
-          ]}
-        />
-      </Card>
-    </div>
+          <DataTable<Alumno>
+              columns={columns}
+              data={data as Alumno[]}
+              pageSize={5}
+              searchPlaceholder="Buscar por ID, alumno o curso..."
+              actions={[
+                {
+                  label: 'Nuevo',
+                  onClick: handleNew,
+                  icon: <PlusIcon className="h-4 w-4" /> as React.ReactNode,
+                },
+              ]}
+
+          />
+        </Card>
+      </div>
   )
 }

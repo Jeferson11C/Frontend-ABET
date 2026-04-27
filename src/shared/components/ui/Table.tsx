@@ -174,9 +174,9 @@ export function DataTable<TData, TValue>({
                         <div />
                     )}
 
-                    {actions?.length > 0 && (
+                    {(actions ?? []).length > 0 && (
                         <div className="flex flex-wrap items-center gap-2 sm:justify-end">
-                            {actions.map((action) => (
+                            {(actions ?? []).map((action) => (
                                 <Button
                                     key={action.label}
                                     onClick={action.onClick}
@@ -185,8 +185,8 @@ export function DataTable<TData, TValue>({
                                 >
                                     {action.icon && (
                                         <span className={action.showLabel === false ? 'flex items-center' : 'mr-2 flex items-center'}>
-                                            {action.icon}
-                                        </span>
+            {action.icon}
+          </span>
                                     )}
                                     {action.showLabel !== false && action.label}
                                 </Button>
