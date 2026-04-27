@@ -25,3 +25,4 @@
 // export * from './register-service'
 
 export {}
+export * from './authService'

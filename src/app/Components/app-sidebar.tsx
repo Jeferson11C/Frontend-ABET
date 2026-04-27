@@ -2,15 +2,8 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import {
-  Sidebar,
-  SidebarHeader,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarItem,
-  SidebarNavGroup,
+import { usePathname, useRouter } from 'next/navigation'
+import {Sidebar, SidebarHeader, SidebarContent, SidebarFooter, SidebarGroup, SidebarItem, SidebarNavGroup,
 } from '@/shared/components'
 import {
   HomeIcon,
@@ -33,9 +26,17 @@ type NavItem = {
 
 export function AppSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
   const { t } = useI18n()
 
   const isActive = (href?: string) => (href ? pathname === href : false)
+
+  const handleLogout = () => {
+    localStorage.removeItem('bearerToken')
+    localStorage.removeItem('token')
+    localStorage.removeItem('escuela')
+    router.push('/auth/login')
+  }
 
   const navigation: NavItem[] = [
 
@@ -97,10 +98,12 @@ export function AppSidebar() {
         </SidebarContent>
 
         <SidebarFooter>
-          <SidebarItem
-              label={t('nav.logout')}
-              icon={<ArrowRightStartOnRectangleIcon className="h-5 w-5" />}
-          />
+          <button type="button" onClick={handleLogout} className="w-full text-left">
+            <SidebarItem
+                label={t('nav.logout')}
+                icon={<ArrowRightStartOnRectangleIcon className="h-5 w-5" />}
+            />
+          </button>
         </SidebarFooter>
       </Sidebar>
   )

@@ -1,12 +1,9 @@
 'use client'
 
-import { Badge } from '@/shared/components/ui'
-import { ABETCompetenciesChart } from '../components/charts/ABETCompetenciesChart'
-import { ABETGraduationPie } from '../components/charts/ABETGraduationPie'
-import { ABETHistoricalTrend } from '../components/charts/ABETHistoricalTrend'
-import { ABETProjectAssessment } from '../components/charts/ABETProjectAssessment'
+import { Badge } from '@/shared/components'
+import { ABETCompetenciesChart, ABETGraduationPie, ABETHistoricalTrend, ABETProjectAssessment } from '@/modules/tests/components'
 
-export default function ChartsPage() {
+export default function ChartPage() {
   return (
     <div className="space-y-8">
       <header className="flex justify-between items-end">

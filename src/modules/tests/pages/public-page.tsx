@@ -1,17 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import {
-  Card,
-  Toggle,
-  TextArea,
-  Tabs,
-  Toast,
-  Skeleton,
-  Button,
-  Title,
-  SubTitle,
-} from '@/shared/components/ui'
+import {Card, Toggle, TextArea, Tabs, Toast, Skeleton, Button, Title, SubTitle,
+} from '@/shared/components'
 
 export default function PublicPage() {
   const [activeTab, setActiveTab] = useState('info')
@@ -39,7 +30,7 @@ export default function PublicPage() {
       <Title title="Componentes" />
 
       <section className="space-y-4">
-        <SubTitle title="1. Navegacion por Tabs" />
+        <SubTitle name="1. Navegacion por Tabs" />
         <Card>
           <Tabs tabs={tabOptions} activeTab={activeTab} onChange={setActiveTab} />
           <div className="py-6 text-sm text-zinc-600">
@@ -52,7 +43,7 @@ export default function PublicPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <section className="space-y-4">
-          <SubTitle title="2. Text Area" />
+          <SubTitle name="2. Text Area" />
           <TextArea
             label="Comentarios de Mejora Continua"
             placeholder="Describe las acciones correctivas tomadas en este ciclo..."
@@ -63,7 +54,7 @@ export default function PublicPage() {
         </section>
 
         <section className="space-y-4">
-          <SubTitle title="3. Toogle" />
+          <SubTitle name="3. Toogle" />
           <Card className="flex flex-col gap-6">
             <Toggle
               label="Estado de Acreditacion"
@@ -85,7 +76,7 @@ export default function PublicPage() {
       </div>
 
       <section className="space-y-4">
-        <SubTitle title="4. Skeleton" />
+        <SubTitle name="4. Skeleton" />
         <div className="flex items-start gap-4 p-6 bg-white border border-zinc-200 rounded-2xl shadow-sm">
           <Skeleton className="h-12 w-12 rounded-full" />
           <div className="flex-1 space-y-3">
@@ -97,7 +88,7 @@ export default function PublicPage() {
       </section>
 
       <section className="space-y-4 pb-10">
-        <SubTitle title="5. Toast" />
+        <SubTitle name="5. Toast" />
 
         <div className="flex flex-wrap gap-4">
           <Button onClick={() => triggerToast('success')} className="bg-emerald-600 hover:bg-emerald-700">

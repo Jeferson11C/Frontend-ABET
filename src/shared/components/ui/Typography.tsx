@@ -7,25 +7,28 @@ interface TitleProps {
     className?: string
 }
 
-export const Title = ({ title, icon, className = "" }: TitleProps) => {
-    return (
-        <div className={`flex items-center gap-3 py-4 ${className}`}>
-            {icon && <div className="text-red-600 shrink-0">{icon}</div>}
-            <h1 className="text-3xl font-black text-zinc-900 tracking-tight uppercase">
-                {title}
-            </h1>
-        </div>
-    )
+interface SubTitleProps {
+    name: string
+    icon?: React.ReactNode
+    className?: string
 }
 
-export const SubTitle = ({ title, icon, className = "" }: TitleProps) => {
+export const Title = ({ title, icon = null, className = "" }: TitleProps) => {
     return (
-        <div className={`flex items-center gap-2 py-2 ${className}`}>
-            {icon && <div className="text-red-500 shrink-0">{icon}</div>}
-            <h2 className="text-xl font-bold text-zinc-800 tracking-tight">
+        <div className={`flex items-center ${className}`}>
+            {icon}
+            <h2 className="text-2xl font-semibold text-gray-900 py-3">
                 {title}
             </h2>
         </div>
     )
 }
 
+export const SubTitle = ({ name, icon = null, className = "" }: SubTitleProps) => {
+    return (
+        <div className={`flex items-center ${className}`}>
+            {icon}
+            <h3 className="text-xl font-semibold text-gray-900">{name}</h3>
+        </div>
+    )
+}

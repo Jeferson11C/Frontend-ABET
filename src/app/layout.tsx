@@ -1,9 +1,8 @@
 import React from 'react'
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
-import { SidebarProvider, LocaleProvider } from '@/providers'
-import { Navbar } from '@/shared/components'
-import AppSidebar from '@/app/Components/app-sidebar'
+import { LocaleProvider } from '@/providers'
+import LayoutClient from './LayoutClient'
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -35,23 +34,9 @@ export default function RootLayout({
         >
         <body className="h-full bg-zinc-50 text-zinc-900">
         <LocaleProvider>
-            <SidebarProvider>
-                <div className="flex h-screen w-full overflow-hidden">
-
-                    <AppSidebar />
-
-                    <div className="flex flex-col flex-1 h-full overflow-hidden">
-                        <Navbar />
-
-                        <main className="flex-1 p-8 overflow-y-auto bg-white">
-                            <div className="max-w-7xl mx-auto">
-                                {children}
-                            </div>
-                        </main>
-                    </div>
-
-                </div>
-            </SidebarProvider>
+            <LayoutClient>
+                {children}
+            </LayoutClient>
         </LocaleProvider>
         </body>
         </html>

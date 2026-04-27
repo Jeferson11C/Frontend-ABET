@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import { Card, Input, Select, Button, DataTable } from '@/shared/components/ui'
 import { PlusIcon } from '@heroicons/react/24/outline'
-import { columns, type Alumno } from '../components/tables/columns'
+import { columns, type Alumno } from '@/modules/tests/components'
 
 export default function TablesPage() {
   const [search, setSearch] = useState('')
