@@ -110,7 +110,7 @@ export { Sidebar }
 
 // ── HEADER
 export function SidebarHeader({ className = '' }: { className?: string }) {
-    const { open, toggle, isMobile } = useSidebar()
+    const { open, toggle } = useSidebar()
     const { t } = useI18n()
 
     return (
@@ -322,6 +322,17 @@ export function SidebarItem({
                             </span>
                         )}
                     </div>
+                    {badge !== undefined && (
+                        <span
+                            className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${
+                                active
+                                    ? 'bg-white/20 text-white border border-white/25'
+                                    : badgeStyles[badgeVariant]
+                            }`}
+                        >
+                            {badge}
+                        </span>
+                    )}
                 </>
             )}
         </div>
@@ -348,6 +359,12 @@ export function SidebarNavGroup({
 }) {
     const { open } = useSidebar()
     const [expanded, setExpanded] = useState(defaultOpen)
+
+    const badgeStyles = {
+        urgent:  'bg-red-900/60 text-red-300 border border-red-700/50',
+        info:    'bg-blue-900/60 text-blue-300 border border-blue-700/50',
+        neutral: 'bg-zinc-700/60 text-zinc-300 border border-zinc-600/50',
+    }
 
     return (
         <div>
@@ -381,6 +398,17 @@ export function SidebarNavGroup({
                         >
                             {label}
                         </span>
+                        {badge !== undefined && (
+                            <span
+                                className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                                    active
+                                        ? 'bg-white/20 text-white border border-white/25'
+                                        : badgeStyles[badgeVariant]
+                                }`}
+                            >
+                                {badge}
+                            </span>
+                        )}
                         <ChevronRightIcon
                             className={[
                                 'h-3.5 w-3.5 transition-transform duration-200 flex-shrink-0',

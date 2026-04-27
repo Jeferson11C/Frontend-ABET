@@ -115,7 +115,6 @@ export function DataTable<TData, TValue>({
                                              data,
                                              pageSize = 10,
                                              title,
-                                             dataPage,
                                              showSearch = true,
                                              searchPlaceholder,
                                              searchColumnId,

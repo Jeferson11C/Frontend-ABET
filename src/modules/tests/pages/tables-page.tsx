@@ -1,13 +1,11 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { Card, DataTable } from '@/shared/components'
-import { PlusIcon } from '@heroicons/react/24/outline'
-import { columns, type Alumno } from '@/modules/tests/components'
+import {useMemo} from 'react'
+import {Card, DataTable} from '@/shared/components'
+import {PlusIcon} from '@heroicons/react/24/outline'
+import {type Alumno, columns} from '@/modules/tests/components'
 
 export default function TablesPage() {
-  const [categoria, setCategoria] = useState('')
-
   const handleNew = () => {}
 
   const allData = [
@@ -18,23 +16,16 @@ export default function TablesPage() {
     { id: 5, nombre: 'Luis Garcia', curso: 'Comunicacion', nota: 7, aprobado: false, fecha: '20/03/2026' }
   ]
 
-  const filteredData = useMemo(() => {
-    return allData.filter((item) => {
-      const matchCategoria = !categoria || item.curso === categoria
-      return matchCategoria
-    })
-  }, [categoria])
+  const data = useMemo(() => allData, [])
 
   return (
     <div className="space-y-6">
-
       <Card>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" />
 
         <DataTable<Alumno>
           columns={columns}
-          data={filteredData as Alumno[]}
+          data={data as Alumno[]}
           pageSize={5}
           searchPlaceholder="Buscar por ID, alumno o curso..."
           actions={[
