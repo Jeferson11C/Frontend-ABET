@@ -2,7 +2,7 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 import { Badge, Button } from '@/shared/components'
-import { PencilIcon, EyeIcon } from 'lucide-react'
+import { PencilIcon, EyeIcon } from '@heroicons/react/24/solid'
 
 export type Alumno = {
   id: number
@@ -48,10 +48,10 @@ export const columns: ColumnDef<Alumno>[] = [
     header: 'ACCIONES',
     cell: () => (
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-900 hover:text-red-600">
+        <Button variant="ghost" size="icon" className="h-8 w-8 hover:text-red-600">
           <EyeIcon className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-900 hover:text-red-600">
+        <Button variant="ghost" size="icon" className="h-8 w-8  hover:text-red-600">
           <PencilIcon className="h-4 w-4" />
         </Button>
       </div>

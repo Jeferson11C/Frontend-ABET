@@ -1,6 +1,15 @@
 export const APP_NAME = 'ABET'
 export const DEFAULT_LOCALE = 'es'
 export const DEFAULT_PAGE_SIZE = 20
+export const APP_DESCRIPTION = 'Sistema ABET'
+
+export const DEFAULT_CYCLE_LABEL = '2026-02'
+export const DEFAULT_PROGRAM_TYPE = 'pregrado'
+export const DEFAULT_USER_INITIALS = 'UA'
+export const DEFAULT_PROGRAM_OPTIONS = [
+  { value: 'pregrado', labelKey: 'navbar.program.regular' },
+  { value: 'epe', labelKey: 'navbar.program.epe' },
+] as const
 
 export const STORAGE_KEYS = {
   locale: 'app_locale',

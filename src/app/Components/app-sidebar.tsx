@@ -79,6 +79,7 @@ export function AppSidebar() {
                             label={item.name}
                             icon={<item.icon className="h-5 w-5" />}
                             active={childActive}
+                            defaultOpen={false}
                         >
                           {item.children.map((child) => (
                               <Link key={child.name} href={child.href}>

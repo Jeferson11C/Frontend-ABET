@@ -1,13 +1,15 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Bars3BottomLeftIcon } from '@heroicons/react/24/outline'
 import { useSidebar, Button, LanguageSwitcher } from '@/shared/components'
 import { useI18n } from '@/providers'
 import { useScreen } from '@/shared/hooks'
+import { DEFAULT_CYCLE_LABEL, DEFAULT_PROGRAM_OPTIONS, DEFAULT_PROGRAM_TYPE, DEFAULT_USER_INITIALS } from '@/shared/constants'
 
 type ProgramOption = {
     value: string
-    label: string
+    label?: string
+    labelKey?: string
 }
 
 type NavbarProps = {
@@ -21,22 +23,34 @@ type NavbarProps = {
 }
 
 function Navbar({
-                    cycleLabel = '2026-02',
-                    schoolName = 'Ingenieria',
-                    programType = 'pregrado',
-                    programOptions = [
-                        { value: 'pregrado', label: 'Regular' },
-                        { value: 'epe', label: 'EPE' },
-                    ],
-                    userName = 'Usuario ABET',
-                    userRole = 'Administrador',
-                    userInitials = 'UA',
+                    cycleLabel,
+                    schoolName,
+                    programType,
+                    programOptions,
+                    userName,
+                    userRole,
+                    userInitials,
                 }: NavbarProps) {
     const { toggle, isMobile: isSidebarMobile } = useSidebar()
     const { t } = useI18n()
     const { isMobile, isTablet } = useScreen()
 
-    const [selectedProgram, setSelectedProgram] = useState(programType)
+    const resolvedProgramType = programType ?? DEFAULT_PROGRAM_TYPE
+    const resolvedProgramOptions = useMemo(() => {
+        const options = programOptions ?? DEFAULT_PROGRAM_OPTIONS
+        return options.map((opt) => ({
+            value: opt.value,
+            label: opt.label ?? (opt.labelKey ? t(opt.labelKey) : opt.value),
+        }))
+    }, [programOptions, t])
+
+    const resolvedCycleLabel = cycleLabel ?? DEFAULT_CYCLE_LABEL
+    const resolvedSchoolName = schoolName ?? t('navbar.school.default')
+    const resolvedUserName = userName ?? t('navbar.user')
+    const resolvedUserRole = userRole ?? t('sidebar.user.role')
+    const resolvedUserInitials = userInitials ?? DEFAULT_USER_INITIALS
+
+    const [selectedProgram, setSelectedProgram] = useState(resolvedProgramType)
 
     const navStyle = {
         background: '#f8f8f9',
@@ -62,7 +76,7 @@ function Navbar({
             className="flex items-center gap-[3px] p-[3px] rounded-lg"
             style={{ background: '#ececee', border: '1px solid #e0e0e3' }}
         >
-            {programOptions.map((opt) => (
+            {resolvedProgramOptions.map((opt) => (
                 <button
                     key={opt.value}
                     onClick={() => setSelectedProgram(opt.value)}
@@ -82,10 +96,10 @@ function Navbar({
     const SchoolBlock = () => (
         <div className="flex flex-col gap-[2px]">
             <span className="text-[9px] font-bold uppercase tracking-[0.13em] leading-none" style={{ color: '#C8102E' }}>
-                Escuela
+                {t('navbar.school.label')}
             </span>
             <span className="text-[13.5px] font-bold text-zinc-800 leading-none" style={{ letterSpacing: '-0.01em' }}>
-                {schoolName}
+                {resolvedSchoolName}
             </span>
         </div>
     )
@@ -95,8 +109,8 @@ function Navbar({
             className="flex flex-col gap-[2px] px-3 py-2 rounded-lg"
             style={{ background: '#f0f0f2', border: '1px solid #e2e2e6' }}
         >
-            <span className="text-[9px] font-bold uppercase tracking-[0.13em] leading-none text-zinc-400">Ciclo</span>
-            <span className="text-[13px] font-bold text-zinc-700 leading-none tabular-nums">{cycleLabel}</span>
+            <span className="text-[9px] font-bold uppercase tracking-[0.13em] leading-none text-zinc-400">{t('navbar.cycle.label')}</span>
+            <span className="text-[13px] font-bold text-zinc-700 leading-none tabular-nums">{resolvedCycleLabel}</span>
         </div>
     )
 
@@ -109,12 +123,12 @@ function Navbar({
                     boxShadow: '0 2px 8px rgba(200,16,46,0.22)',
                 }}
             >
-                {userInitials}
+                {resolvedUserInitials}
             </div>
             {!compact && (
                 <div className="flex flex-col leading-none gap-[3px]">
-                    <span className="text-[12.5px] font-semibold text-zinc-800 truncate max-w-[160px]">{userName}</span>
-                    <span className="text-[10px] text-zinc-400 truncate max-w-[160px]">{userRole}</span>
+                    <span className="text-[12.5px] font-semibold text-zinc-800 truncate max-w-[160px]">{resolvedUserName}</span>
+                    <span className="text-[10px] text-zinc-400 truncate max-w-[160px]">{resolvedUserRole}</span>
                 </div>
             )}
         </div>

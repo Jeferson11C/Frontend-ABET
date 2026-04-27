@@ -3,6 +3,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 import { ChevronRightIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline'
 import { useScreen } from '@/shared/hooks'
 import { useI18n } from '@/providers'
+import {Button
+} from '@/shared/components'
 
 // ── TYPES
 type SidebarContextType = {
@@ -114,7 +116,7 @@ export function SidebarHeader({ className = '' }: { className?: string }) {
     return (
         <div
             className={[
-                'relative w-full border-b border-zinc-800 flex items-center justify-center',
+                'relative w-full border-b border-zinc-700 flex items-center justify-center',
                 open ? 'h-28 py-3 px-4' : 'h-20 px-2 py-2',
                 'transition-all duration-300',
                 className,
@@ -145,26 +147,26 @@ export function SidebarHeader({ className = '' }: { className?: string }) {
                     aria-label={t('sidebar.open')}
                     className="relative z-10 h-10 w-10 rounded-lg flex items-center justify-center text-zinc-200 hover:text-white hover:bg-zinc-700/60 transition-all"
                 >
-                    <Bars3BottomLeftIcon className="h-5 w-5" />
+                    <Bars3BottomLeftIcon className="h-5 w-5 transition-transform duration-200 rotate-0" />
                 </button>
             )}
 
             {/* Toggle button (solo cuando esta abierto) */}
             {open && (
-                <button
+                <Button variant="ghost" size="icon"
                     onClick={toggle}
                     aria-label={t('sidebar.close')}
                     className={[
                         'absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center transition-all z-20',
-                        'text-zinc-400 hover:text-white',
+                        'text-zinc-100 hover:text-white',
                         'hover:bg-zinc-700/60',
                         'right-3',
                     ].join(' ')}
                 >
                     <Bars3BottomLeftIcon
-                        className="h-[18px] w-[18px] transition-transform duration-200"
+                        className="h-[18px] w-[18px] transition-transform duration-200 rotate-180"
                     />
-                </button>
+                </Button>
             )}
         </div>
     )
@@ -195,7 +197,7 @@ export function SidebarFooter({
 }) {
     return (
         <div
-            className={`px-2.5 py-3 border-t border-zinc-800 ${className}`}
+            className={`px-2.5 py-3 border-t border-zinc-700 ${className}`}
             style={{
                 background: 'linear-gradient(to top, rgba(0,0,0,0.3), transparent)',
             }}
@@ -273,26 +275,23 @@ export function SidebarItem({
                 className,
             ].join(' ')}
             style={active ? {
-                background: 'linear-gradient(135deg, rgba(200,16,46,0.9) 0%, rgba(180,10,36,0.95) 100%)',
-                boxShadow: '0 2px 16px rgba(200,16,46,0.3), inset 0 1px 0 rgba(255,255,255,0.08)',
+                // ROJO SÓLIDO (Hijo Activo - Protagonista)
+                background: 'linear-gradient(135deg, rgba(200,16,46,1) 0%, rgba(180,10,36,1) 100%)',
+                boxShadow: '0 4px 12px rgba(200,16,46,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             } : undefined}
         >
-            {/* Active left accent bar */}
             {active && (
                 <div
                     className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full"
-                    style={{ background: 'rgba(255,255,255,0.6)' }}
+                    style={{ background: '#fff' }}
                 />
             )}
 
-            {/* Icon box */}
             {hasIcon && (
                 <div
                     className={[
                         'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all',
-                        active
-                            ? 'bg-white/15'
-                            : 'bg-zinc-800 group-hover:bg-zinc-700',
+                        active ? 'bg-white/20' : 'bg-zinc-800 group-hover:bg-zinc-700',
                     ].join(' ')}
                 >
                     <span className={active ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'}>
@@ -306,33 +305,23 @@ export function SidebarItem({
                     <div className="flex flex-col flex-1 min-w-0">
                         <span
                             className={[
-                                'text-[13px] font-semibold truncate leading-tight',
+                                'text-[13px] font-semibold leading-tight whitespace-normal break-words',
                                 active ? 'text-white' : 'text-zinc-300 group-hover:text-white',
                             ].join(' ')}
-                            style={{ fontFamily: "'DM Sans', sans-serif" }}
                         >
                             {label}
                         </span>
                         {sublabel && (
-                            <span className={[
-                                'text-[10.5px] truncate',
-                                active ? 'text-white/70' : 'text-zinc-500',
-                            ].join(' ')}>
+                            <span
+                                className={[
+                                    'text-[10.5px] whitespace-normal break-words',
+                                    active ? 'text-white/80' : 'text-zinc-500',
+                                ].join(' ')}
+                            >
                                 {sublabel}
                             </span>
                         )}
                     </div>
-                    {badge !== undefined && (
-                        <span
-                            className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${
-                                active
-                                    ? 'bg-white/20 text-white border border-white/25'
-                                    : badgeStyles[badgeVariant]
-                            }`}
-                        >
-                            {badge}
-                        </span>
-                    )}
                 </>
             )}
         </div>
@@ -346,7 +335,7 @@ export function SidebarNavGroup({
                                     badge,
                                     badgeVariant = 'neutral',
                                     defaultOpen = true,
-                                    active = false,
+                                    active = false, // Este 'active' indica que un hijo está seleccionado
                                     children,
                                 }: {
     label: string
@@ -360,89 +349,56 @@ export function SidebarNavGroup({
     const { open } = useSidebar()
     const [expanded, setExpanded] = useState(defaultOpen)
 
-    const badgeStyles = {
-        urgent:  'bg-red-900/60 text-red-300 border border-red-700/50',
-        info:    'bg-blue-900/60 text-blue-300 border border-blue-700/50',
-        neutral: 'bg-zinc-700/60 text-zinc-300 border border-zinc-600/50',
-    }
-
     return (
         <div>
             <div
                 onClick={() => { if (open) setExpanded(p => !p) }}
                 className={[
                     'relative flex items-center gap-3 px-2.5 py-2 rounded-lg cursor-pointer transition-all duration-150 group',
-                    active ? '' : 'hover:bg-zinc-800/70',
+                    // Si está activo, aplicamos un fondo rojo sutil (Opción A)
+                    active ? 'bg-red-500/10' : 'hover:bg-zinc-800/70',
                 ].join(' ')}
-                style={active ? {
-                    background: 'linear-gradient(135deg, rgba(200,16,46,0.9) 0%, rgba(180,10,36,0.95) 100%)',
-                    boxShadow: '0 2px 16px rgba(200,16,46,0.3), inset 0 1px 0 rgba(255,255,255,0.08)',
-                } : undefined}
             >
+                {/* Indicador lateral sutil para el padre */}
                 {active && (
-                    <div
-                        className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full"
-                        style={{ background: 'rgba(255,255,255,0.6)' }}
-                    />
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-4 bg-red-600 rounded-r-full" />
                 )}
 
                 <div
                     className={[
                         'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all',
-                        active
-                            ? 'bg-white/15'
-                            : 'bg-zinc-800 group-hover:bg-zinc-700',
+                        active ? 'bg-red-500/20' : 'bg-zinc-800 group-hover:bg-zinc-700',
                     ].join(' ')}
                 >
-                    <span className={active ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'}>
+                    <span className={active ? 'text-red-500' : 'text-zinc-400 group-hover:text-zinc-200'}>
                         {icon}
                     </span>
                 </div>
 
                 {open && (
                     <>
-                        <span
-                            className={[
-                                'text-[13px] font-semibold flex-1 truncate',
-                                active ? 'text-white' : 'text-zinc-300 group-hover:text-white',
-                            ].join(' ')}
-                            style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        <span className={['text-[13px] font-semibold flex-1 truncate', active ? 'text-white' : 'text-zinc-300 group-hover:text-white'].join(' ')}
                         >
                             {label}
                         </span>
-                        {badge !== undefined && (
-                            <span
-                                className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                                    active
-                                        ? 'bg-white/20 text-white border border-white/25'
-                                        : badgeStyles[badgeVariant]
-                                }`}
-                            >
-                                {badge}
-                            </span>
-                        )}
                         <ChevronRightIcon
                             className={[
                                 'h-3.5 w-3.5 transition-transform duration-200 flex-shrink-0',
-                                expanded
-                                    ? active ? 'rotate-90 text-white/80' : 'rotate-90 text-zinc-400'
-                                    : active ? 'text-white/50' : 'text-zinc-600',
+                                expanded ? 'rotate-90' : '',
+                                active ? 'text-red-500' : 'text-zinc-600',
                             ].join(' ')}
                         />
                     </>
                 )}
             </div>
 
-            {/* Sub items */}
             {open && (
                 <div
                     className={[
                         'ml-5 pl-3 flex flex-col gap-0.5 overflow-hidden transition-all duration-200',
-                        expanded ? 'max-h-48 mt-0.5' : 'max-h-0',
+                        expanded ? 'max-h-[500px] mt-0.5 mb-1' : 'max-h-0',
                     ].join(' ')}
-                    style={{
-                        borderLeft: '1px solid rgba(255,255,255,0.07)',
-                    }}
+                    style={{ borderLeft: '1px solid rgba(255,255,255,0.2)' }}
                 >
                     {children}
                 </div>
@@ -455,9 +411,9 @@ export function SidebarNavGroup({
 export function SidebarDivider() {
     return (
         <div className="my-2 mx-2 flex items-center gap-2">
-            <div className="flex-1 h-px bg-zinc-800" />
+            <div className="flex-1 h-px bg-zinc-400" />
             <div className="w-1 h-1 rounded-full bg-zinc-700" />
-            <div className="flex-1 h-px bg-zinc-800" />
+            <div className="flex-1 h-px bg-zinc-400" />
         </div>
     )
 }

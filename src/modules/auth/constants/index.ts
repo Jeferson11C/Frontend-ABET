@@ -16,7 +16,5 @@
  * si solo auth la usa, déjala aquí.
  */
 
-// export * from './auth-routes'
-// export * from './auth-storage-keys'
-
-export {}
+export * from './mock'
+export * from './schools'

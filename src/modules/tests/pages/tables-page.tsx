@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useMemo } from 'react'
-import { Card, Input, Select, Button, DataTable } from '@/shared/components/ui'
+import { useMemo, useState } from 'react'
+import { Card, DataTable } from '@/shared/components'
 import { PlusIcon } from '@heroicons/react/24/outline'
 import { columns, type Alumno } from '@/modules/tests/components'
 
 export default function TablesPage() {
-  const [search, setSearch] = useState('')
   const [categoria, setCategoria] = useState('')
+
+  const handleNew = () => {}
 
   const allData = [
     { id: 1, nombre: 'Juan Perez', curso: 'Matematica', nota: 15, aprobado: true, fecha: '10/03/2026' },
@@ -19,44 +20,34 @@ export default function TablesPage() {
 
   const filteredData = useMemo(() => {
     return allData.filter((item) => {
-      const matchSearch =
-        item.nombre.toLowerCase().includes(search.toLowerCase()) ||
-        item.id.toString().includes(search)
       const matchCategoria = !categoria || item.curso === categoria
-      return matchSearch && matchCategoria
+      return matchCategoria
     })
-  }, [search, categoria])
+  }, [categoria])
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-zinc-900">Registros</h1>
-        <Button className="bg-red-600 flex gap-2 font-bold">
-          <PlusIcon className="h-5 w-5" /> Nuevo
-        </Button>
-      </div>
 
       <Card>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <Input
-            placeholder="Buscar por ID o Nombre..."
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <Select
-            placeholder="Todos los cursos"
-            options={[
-              { label: 'Matematica', value: 'Matematica' },
-              { label: 'Comunicacion', value: 'Comunicacion' },
-              { label: 'Historia', value: 'Historia' }
-            ]}
-            onChange={(_, selected) => {
-              const selectedValue = Array.isArray(selected) ? '' : selected?.value
-              setCategoria(selectedValue ? String(selectedValue) : '')
-            }}
-          />
         </div>
 
-        <DataTable<Alumno> columns={columns} data={filteredData as Alumno[]} pageSize={5} />
+        <DataTable<Alumno>
+          columns={columns}
+          data={filteredData as Alumno[]}
+          pageSize={5}
+          searchPlaceholder="Buscar por ID, alumno o curso..."
+          actions={[
+            {
+              label: 'Nuevo',
+              onClick: handleNew,
+              icon: <PlusIcon className="h-4 w-4" />,
+              buttonProps: {
+                className: 'bg-red-600 text-white hover:bg-red-700 h-10 px-4',
+              },
+            },
+          ]}
+        />
       </Card>
     </div>
   )

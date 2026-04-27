@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from 'react'
 import SelectBase from 'react-select'
 import CreatableSelect from 'react-select/creatable'
+import { useI18n } from '@/providers'
 
 type OptionItem = {
     label: string
@@ -32,6 +33,10 @@ export interface SelectProps {
 }
 
 const getCodeFromName = (item: { name?: string; label?: string; value?: string | number; id?: string | number }) => {
+    if (item?.label && !item?.name) {
+        return item.label
+    }
+
     const raw = item?.name ?? item?.label ?? ''
     if (raw.trim() === '') {
         return String(item?.value ?? item?.id ?? '')
@@ -61,6 +66,7 @@ function Select({
 }: SelectProps) {
     const [inputValue, setInputValue] = useState('')
     const selectId = React.useId()
+    const { t } = useI18n()
 
     const formattedOptions = useMemo<OptionItem[]>(() => {
         return options.map((item) => {
@@ -142,7 +148,7 @@ function Select({
         isSearchable,
         isClearable,
         isDisabled,
-        placeholder: placeholder || (label ? `Seleccione ${label.toLowerCase()}` : 'Seleccione una opcion'),
+        placeholder: placeholder || t('select.placeholder.default'),
         menuPortalTarget: typeof document !== 'undefined' ? document.body : undefined,
         menuPosition: 'fixed' as const,
         styles: selectStyles,
@@ -162,7 +168,7 @@ function Select({
                 <CreatableSelect
                     {...commonProps}
                     onCreateOption={handleCreateOption}
-                    formatCreateLabel={(val: string) => `Crear: "${val}"`}
+                    formatCreateLabel={(val: string) => t('select.createLabel').replace('{value}', val)}
                 />
             ) : (
                 <SelectBase {...commonProps} />
@@ -177,4 +183,4 @@ function Select({
     )
 }
 
-export {Select}
+export { Select }

@@ -1,21 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  Button,
-  Input,
-  Select,
-  LoadingDialog,
-  ErrorDialog,
-  SuccessDialog,
-  WarningDialog,
-  InfoDialog,
-  ConfirmDialog,
-  FormDialog,
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/shared/components/ui'
+import {Button, Input, Select, LoadingDialog, ErrorDialog, SuccessDialog, WarningDialog, InfoDialog,
+  ConfirmDialog, FormDialog, HoverCard, HoverCardContent, HoverCardTrigger,
+} from '@/shared/components'
 
 export default function ModalsDemoPage() {
   const [openForm, setOpenForm] = useState(false)
@@ -89,7 +77,6 @@ export default function ModalsDemoPage() {
         isOpen={openForm}
         onClose={() => setOpenForm(false)}
         onSubmit={handleSubmitForm}
-        title="Registrar Nuevo Alumno"
       >
         <div className="grid grid-cols-1 gap-4">
           <Input label="Nombre completo" placeholder="Nombre y Apellido" required />

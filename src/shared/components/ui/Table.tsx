@@ -2,13 +2,17 @@
 import * as React from "react"
 import {
     ColumnDef,
+    ColumnFiltersState,
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table"
 import { cn } from "@/shared/lib/utils"
 import { Button } from "./Button"
+import { Input } from "./Input"
+import { useI18n } from '@/providers'
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
     return (
@@ -83,6 +87,14 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
 
 // MOTOR DATA TABLE ---
 
+interface DataTableAction {
+    label: string
+    onClick: () => void
+    icon?: React.ReactNode
+    showLabel?: boolean
+    buttonProps?: Omit<React.ComponentProps<typeof Button>, 'onClick' | 'children'>
+}
+
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
@@ -92,6 +104,10 @@ interface DataTableProps<TData, TValue> {
         page: number
         totalPages: number
     }
+    showSearch?: boolean
+    searchPlaceholder?: string
+    searchColumnId?: string
+    actions?: DataTableAction[]
 }
 
 export function DataTable<TData, TValue>({
@@ -99,19 +115,87 @@ export function DataTable<TData, TValue>({
                                              data,
                                              pageSize = 10,
                                              title,
-                                             dataPage
+                                             dataPage,
+                                             showSearch = true,
+                                             searchPlaceholder,
+                                             searchColumnId,
+                                             actions = [],
                                          }: DataTableProps<TData, TValue>) {
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+    const [globalFilter, setGlobalFilter] = React.useState("")
+    const { t } = useI18n()
+
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnFiltersChange: setColumnFilters,
+        onGlobalFilterChange: setGlobalFilter,
+        state: {
+            columnFilters,
+            globalFilter,
+        },
+        globalFilterFn: (row, columnId, filterValue) => {
+            const value = row.getValue(columnId)
+            return String(value ?? "").toLowerCase().includes(String(filterValue ?? "").toLowerCase())
+        },
         initialState: { pagination: { pageSize } }
     })
+
+    const searchValue = searchColumnId
+        ? (table.getColumn(searchColumnId)?.getFilterValue() as string) ?? ""
+        : globalFilter
+
+    const placeholderText = searchPlaceholder ?? t('table.search.placeholder')
+
+    const handleSearchChange = (value: string) => {
+        if (searchColumnId) {
+            table.getColumn(searchColumnId)?.setFilterValue(value)
+            return
+        }
+        setGlobalFilter(value)
+    }
 
     return (
         <div className="space-y-4">
             {title && <h3 className="text-lg font-bold text-zinc-800 px-1 uppercase tracking-tight">{title}</h3>}
+
+            {(showSearch || actions?.length > 0) && (
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    {showSearch ? (
+                        <Input
+                            placeholder={placeholderText}
+                            value={searchValue}
+                            onChange={(e) => handleSearchChange(e.target.value)}
+                            className="max-w-sm"
+                        />
+                    ) : (
+                        <div />
+                    )}
+
+                    {actions?.length > 0 && (
+                        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+                            {actions.map((action) => (
+                                <Button
+                                    key={action.label}
+                                    onClick={action.onClick}
+                                    aria-label={action.label}
+                                    {...action.buttonProps}
+                                >
+                                    {action.icon && (
+                                        <span className={action.showLabel === false ? 'flex items-center' : 'mr-2 flex items-center'}>
+                                            {action.icon}
+                                        </span>
+                                    )}
+                                    {action.showLabel !== false && action.label}
+                                </Button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
 
             <Table>
                 <TableHeader>
@@ -139,7 +223,7 @@ export function DataTable<TData, TValue>({
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className="h-32 text-center text-zinc-400 font-medium italic">
-                                No se encontraron resultados disponibles.
+                                {t('table.empty')}
                             </TableCell>
                         </TableRow>
                     )}
@@ -155,11 +239,11 @@ export function DataTable<TData, TValue>({
                     disabled={!table.getCanPreviousPage()}
                     className="rounded-md bg-red-50 px-4 py-2 text-sm font-bold text-red-600 border-none hover:bg-red-100 disabled:bg-zinc-100 disabled:text-zinc-400 transition-all"
                 >
-                    Anterior
+                    {t('table.pagination.previous')}
                 </Button>
 
                 <div className="text-[10px] font-black uppercase text-zinc-500 tracking-widest bg-zinc-100 px-3 py-1 rounded-full">
-                    Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
+                    {t('table.pagination.page')} {table.getState().pagination.pageIndex + 1} {t('table.pagination.of')} {table.getPageCount()}
                 </div>
 
                 <Button
@@ -169,7 +253,7 @@ export function DataTable<TData, TValue>({
                     disabled={!table.getCanNextPage()}
                     className="rounded-md bg-red-50 px-4 py-2 text-sm font-bold text-red-600 border-none hover:bg-red-100 disabled:bg-zinc-100 disabled:text-zinc-400 transition-all"
                 >
-                    Siguiente
+                    {t('table.pagination.next')}
                 </Button>
             </div>
         </div>

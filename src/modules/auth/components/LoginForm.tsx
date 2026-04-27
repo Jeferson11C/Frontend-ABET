@@ -1,22 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Input, Select, Button, LoadingDialog } from '@/shared/components/ui'
+import { Input, Select, Button, LoadingDialog } from '@/shared/components'
 import { LoginPayload } from '@/shared/types'
 import { loginMock } from '@/modules/auth/services'
-
-const schoolOptions = [
-  { id: 'EISCC', label: 'ESCUELA DE INGENIERÍA DE SOFTWARE Y CIENCIAS DE LA COMPUTACIÓN' },
-  { id: 'EISCB', label: 'ESCUELA DE INGENIERÍA DE SISTEMAS Y CIBER SEGURIDAD' },
-  { id: 'INGGMI', label: 'ESCUELA DE INGENIERÍA DE GESTIÓN MINERA' },
-  { id: 'INGGEM', label: 'ESCUELA DE INGENIERÍA DE GESTIÓN EMPRESARIAL' },
-  { id: 'ESCEL', label: 'ESCUELA DE INGENIERÍA ELECTRONICA, MECATRONICA Y REDES' },
-  { id: 'INGAMB', label: 'ESCUELA DE INGENIERÍA AMBIENTAL' },
-  { id: 'INGBIO', label: 'ESCUELA DE INGENIERÍA BIOMEDICA' },
-  { id: 'INGCIV', label: 'ESCUELA DE INGENIERÍA CIVIL' },
-  { id: 'INGIND', label: 'ESCUELA DE INGENIERÍA INDUSTRIAL' },
-]
+import { schoolOptions } from '@/modules/auth/constants'
+import { useI18n } from '@/providers'
 
 export default function LoginForm() {
   const [escuela, setEscuela] = useState('')
@@ -25,13 +15,19 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
+  const { t } = useI18n()
+
+  const localizedSchools = useMemo(
+    () => schoolOptions.map((option) => ({ id: option.id, label: t(option.labelKey) })),
+    [t]
+  )
 
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault()
     setError(null)
 
     if (!escuela || !codigo || !password) {
-      setError('Todos los campos son obligatorios')
+      setError(t('login.error.required'))
       return
     }
 
@@ -45,7 +41,9 @@ export default function LoginForm() {
       router.push('/')
       // aquí podrías setear auth en contexto si existe
     } catch (err: any) {
-      setError(err?.message || 'Error durante el login')
+      const messageKey = typeof err?.message === 'string' ? err.message : 'login.error.generic'
+      const translated = t(messageKey)
+      setError(translated === messageKey ? t('login.error.generic') : translated)
     } finally {
       setLoading(false)
     }
@@ -61,34 +59,45 @@ export default function LoginForm() {
             name="escuela"
             value={escuela ? { label: escuela, value: escuela } : null}
             onChange={(_, v) => setEscuela((v as any)?.value || '')}
-            options={schoolOptions}
-            placeholder="Selecciona escuela"
+            options={localizedSchools}
+            placeholder={t('login.school.placeholder')}
           />
         </div>
 
         <div>
-          <Input id="codigo" value={codigo} onChange={(e: any) => setCodigo(e.target.value)} placeholder="Usuario" />
+          <Input
+            id="codigo"
+            value={codigo}
+            onChange={(e: any) => setCodigo(e.target.value)}
+            placeholder={t('login.user.placeholder')}
+          />
         </div>
 
         <div>
-          <Input id="password" type="password" value={password} onChange={(e: any) => setPassword(e.target.value)} placeholder="Contraseña" />
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e: any) => setPassword(e.target.value)}
+            placeholder={t('login.password.placeholder')}
+          />
         </div>
       </div>
 
       <div className="flex items-center">
         <label className="flex items-center text-sm">
-          <input type="checkbox" className="mr-2" /> Recuerdame
+          <input type="checkbox" className="mr-2" /> {t('login.remember')}
         </label>
       </div>
 
       <div className="space-y-3">
-        <Button type="submit" className="w-full">Iniciar sesión</Button>
+        <Button type="submit" className="w-full">{t('login.submit')}</Button>
         <div className="text-center">
-          <a href="#" className="text-sm text-red-600">¿Olvidaste la contraseña?</a>
+          <a href="#" className="text-sm text-red-600">{t('login.forgot')}</a>
         </div>
       </div>
 
-      {loading && <LoadingDialog isOpen={loading} label="Iniciando sesión..." />}
+      {loading && <LoadingDialog isOpen={loading} label={t('login.loading')} />}
     </form>
   )
 }

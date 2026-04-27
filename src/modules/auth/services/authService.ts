@@ -14,7 +14,7 @@ export const loginMock = (payload: LoginPayload): Promise<{ accessToken: string;
           user: { sub: payload.codigo, name: 'Usuario Demo', college: payload.escuela },
         })
       } else {
-        reject(new Error('Credenciales inválidas'))
+        reject(new Error('auth.invalidCredentials'))
       }
     }, 700)
   })

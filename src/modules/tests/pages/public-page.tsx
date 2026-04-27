@@ -1,13 +1,14 @@
 'use client'
 
 import React, { useState } from 'react'
-import {Card, Toggle, TextArea, Tabs, Toast, Skeleton, Button, Title, SubTitle,
+import {Card, Toggle, TextArea, Tabs, Toast, Skeleton, Button, Title, SubTitle, Checkbox,
 } from '@/shared/components'
 
 export default function PublicPage() {
   const [activeTab, setActiveTab] = useState('info')
   const [switchEnabled, setSwitchEnabled] = useState(false)
   const [textValue, setTextValue] = useState('')
+  const [termsAccepted, setTermsAccepted] = useState(false)
 
   const tabOptions = [
     { id: 'info', label: 'Informacion General' },
@@ -109,6 +110,17 @@ export default function PublicPage() {
           type={toastState.type}
           onClose={() => setToastState((prev) => ({ ...prev, open: false }))}
         />
+      </section>
+
+      <section className="space-y-4">
+        <SubTitle name="6. Checkbox" />
+        <div className="flex items-center gap-2">
+          <Checkbox
+            checked={termsAccepted}
+            onCheckedChange={(checked) => setTermsAccepted(Boolean(checked))}
+          />
+          <span className="text-sm text-zinc-700">Acepto los terminos y condiciones</span>
+        </div>
       </section>
     </div>
   )

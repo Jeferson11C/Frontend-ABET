@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { LocaleProvider } from '@/providers'
 import LayoutClient from './LayoutClient'
+import { APP_DESCRIPTION, APP_NAME, DEFAULT_LOCALE } from '@/shared/constants'
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -16,10 +17,10 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
     title: {
-        default: 'ABET',
-        template: '%s | ABET',
+        default: APP_NAME,
+        template: `%s | ${APP_NAME}`,
     },
-    description: 'Sistema ABET',
+    description: APP_DESCRIPTION,
 }
 
 export default function RootLayout({
@@ -29,7 +30,7 @@ export default function RootLayout({
 }) {
     return (
         <html
-            lang="es"
+            lang={DEFAULT_LOCALE}
             className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
         >
         <body className="h-full bg-zinc-50 text-zinc-900">

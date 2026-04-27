@@ -5,9 +5,11 @@ import LoginForm from './components/LoginForm'
 import { Card } from '@/shared/components/ui/Card'
 import { Title } from '@/shared/components'
 import { useScreen } from '@/shared/hooks'
+import { useI18n } from '@/providers'
 
 export default function Login() {
   const { isMobile, isTablet } = useScreen()
+  const { t } = useI18n()
 
   return (
       <div
@@ -34,10 +36,10 @@ export default function Login() {
                     className="mx-auto w-auto mb-3"
                     style={{ height: isMobile ? '72px' : '96px' }}
                     src="/assets/ABETLogo.png"
-                    alt="ABET Logo"
+                    alt={t('sidebar.logoAlt')}
                 />
                 <div className="flex justify-center">
-                  <Title title="Sistema de acreditación" className="justify-center py-0" />
+                  <Title title={t('login.title')} className="justify-center py-0" />
                 </div>
               </div>
 
