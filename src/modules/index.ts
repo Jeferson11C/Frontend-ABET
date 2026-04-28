@@ -21,5 +21,4 @@
  */
 
 export * from './auth'
-export * from './rubricas'
 export * from './tests'
