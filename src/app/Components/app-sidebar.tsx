@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import {Sidebar, SidebarHeader, SidebarContent, SidebarFooter, SidebarGroup, SidebarItem, SidebarNavGroup,
 } from '@/shared/components'
 import {
-  HomeIcon,
+  HomeIcon, FolderIcon,
   Cog6ToothIcon,
   ArrowRightStartOnRectangleIcon,
 } from '@heroicons/react/24/outline'
@@ -50,10 +50,11 @@ export function AppSidebar() {
         { name: t('nav.charts'), href: '/tests/charts' },
         { name: t('nav.tables'), href: '/tests/tables' },
         { name: t('nav.public'), href: '/tests/public' },
+
       ],
     },
 
-  ]
+]
 
   return (
       <Sidebar>

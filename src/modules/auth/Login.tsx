@@ -11,10 +11,13 @@ export default function Login() {
   const { isMobile, isTablet } = useScreen()
   const { t } = useI18n()
 
+  const background =
+      'https://aulavirtual.upc.edu.pe/bbcswebdav/institution/Branding/New_Login/fondo-bb.jpg'
+
   return (
       <div
           className="min-h-screen w-full bg-cover bg-center flex items-center justify-center"
-          style={{ backgroundImage: "url('/background.jpg')" }}
+          style={{ backgroundImage: `url(${background})` }}
       >
         <div className="w-full px-4 py-8">
           <div
@@ -29,7 +32,6 @@ export default function Login() {
                       : { aspectRatio: '1 / 1' }
                 }
             >
-
               {/* HEADER */}
               <div className="text-center">
                 <img
@@ -38,6 +40,7 @@ export default function Login() {
                     src="/assets/ABETLogo.png"
                     alt={t('sidebar.logoAlt')}
                 />
+
                 <div className="flex justify-center">
                   <Title title={t('login.title')} className="justify-center py-0" />
                 </div>
@@ -45,9 +48,7 @@ export default function Login() {
 
               {/* FORM */}
               <LoginForm />
-
             </Card>
-
           </div>
         </div>
       </div>

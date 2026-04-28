@@ -1,5 +1,6 @@
 {
   "nav.home": "Home",
+  "nav.rubirc": "Rubricas",
   "welcome": "Welcome to the ABET.",
   "nav.views": "Views",
   "nav.charts": "Charts",
@@ -8,7 +9,7 @@
   "navbar.user": "ABET User",
   "navbar.openMenu": "Open menu",
   "navbar.school.label": "School",
-  "navbar.school.default": "Engineering",
+  "navbar.school.default": "QA",
   "navbar.cycle.label": "Cycle",
   "navbar.program.regular": "Regular",
   "navbar.program.epe": "EPE",
@@ -18,6 +19,7 @@
   "sidebar.open": "Open sidebar",
   "sidebar.close": "Close sidebar",
   "sidebar.logoAlt": "ABET Logo",
+  "sidebar.user.role": "Admi",
   "dialog.close": "Close",
   "dialog.actions.accept": "Accept",
   "dialog.actions.decline": "Decline",

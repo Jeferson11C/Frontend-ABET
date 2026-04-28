@@ -3,7 +3,7 @@ export const DEFAULT_LOCALE = 'es'
 export const DEFAULT_PAGE_SIZE = 20
 export const APP_DESCRIPTION = 'Sistema ABET'
 
-export const DEFAULT_CYCLE_LABEL = '2026-02'
+export const DEFAULT_CYCLE_LABEL = '2026-01'
 export const DEFAULT_PROGRAM_TYPE = 'pregrado'
 export const DEFAULT_USER_INITIALS = 'UA'
 export const DEFAULT_PROGRAM_OPTIONS = [
