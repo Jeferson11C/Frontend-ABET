@@ -32,11 +32,16 @@ export function AppSidebar() {
   const isActive = (href?: string) => (href ? pathname === href : false)
 
   const handleLogout = () => {
-    localStorage.removeItem('bearerToken')
-    localStorage.removeItem('token')
-    localStorage.removeItem('escuela')
-    router.push('/auth/login')
+    localStorage.clear()
+    sessionStorage.clear()
+    document.cookie.split(';').forEach(c => {
+      document.cookie = c
+          .replace(/^ +/, '')
+          .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+    })
+    router.replace('/auth/login')
   }
+
 
   const navigation: NavItem[] = [
 

@@ -5,13 +5,19 @@ import { SidebarProvider } from '@/providers'
 import { Navbar } from '@/shared/components'
 import AppSidebar from '@/app/Components/app-sidebar'
 import { usePathname } from 'next/navigation'
+import { useAuthGuard } from '@/shared/hooks/useAuthGuard'
 
-export default function LayoutClient({ children }: { children: React.ReactNode }) {
+export default function LayoutClient({ children }) {
     const pathname = usePathname()
     const isAuthRoute = pathname?.startsWith('/auth') ?? false
 
     if (isAuthRoute) {
         return <>{children}</>
+    }
+
+    const checking = useAuthGuard()
+    if (checking) {
+        return <div>Cargando...</div>
     }
 
     return (
