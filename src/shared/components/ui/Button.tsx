@@ -19,11 +19,12 @@ const buttonVariants = cva(
           neutral:   'bg-zinc-500 text-white hover:bg-zinc-600 focus-visible:ring-zinc-400',
           info:      'bg-zinc-400 text-white hover:bg-zinc-500 focus-visible:ring-zinc-300',
         },
-        size: {
-          sm: 'h-7 px-2 py-1 text-sm gap-1',
-          md: 'h-9 px-4 py-2 text-base gap-1.5',
-          lg: 'h-11 px-6 py-3 text-lg gap-2',
-        },
+          size: {
+              sm: 'h-7 px-2 py-1 text-sm gap-1',
+              md: 'h-9 px-4 py-2 text-base gap-1.5',
+              lg: 'h-11 px-6 py-3 text-lg gap-2',
+              icon: 'h-9 w-9 p-0',
+          },
       },
       defaultVariants: {
         variant: 'primary',

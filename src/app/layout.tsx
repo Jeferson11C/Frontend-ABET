@@ -2,7 +2,7 @@ import React from 'react'
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { LocaleProvider } from '@/providers'
-import LayoutClient from './LayoutClient'
+import LayoutClient from '@/app/components/LayoutClient'
 import { APP_DESCRIPTION, APP_NAME, DEFAULT_LOCALE } from '@/shared/constants'
 
 const geistSans = Geist({
@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
     title: {
         default: APP_NAME,
-        template: `%s | ${APP_NAME}`,
+        template: `%s - ${APP_NAME}`,
     },
     description: APP_DESCRIPTION,
 }

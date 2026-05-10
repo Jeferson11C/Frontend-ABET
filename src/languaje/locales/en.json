@@ -1,78 +1,171 @@
 {
-  "nav.home": "Home",
-  "nav.rubirc": "Rubricas",
+  "nav": {
+    "home": "Home",
+    "tests": {
+      "label": "Tests",
+      "modals": "Modals",
+      "charts": "Charts",
+      "tables": "Tables",
+      "public": "Public"
+    },
+    "logout": "Logout"
+  },
+
   "welcome": "Welcome to the ABET.",
-  "nav.views": "Views",
-  "nav.charts": "Charts",
-  "nav.tables": "Tables",
-  "nav.tests": "Tests",
-  "navbar.user": "ABET User",
-  "navbar.openMenu": "Open menu",
-  "navbar.school.label": "School",
-  "navbar.school.default": "QA",
-  "navbar.cycle.label": "Cycle",
-  "navbar.program.regular": "Regular",
-  "navbar.program.epe": "EPE",
-  "language.es": "ES",
-  "language.en": "EN",
-  "nav.logout": "Logout",
-  "sidebar.open": "Open sidebar",
-  "sidebar.close": "Close sidebar",
-  "sidebar.logoAlt": "ABET Logo",
-  "sidebar.user.role": "Admi",
-  "dialog.close": "Close",
-  "dialog.actions.accept": "Accept",
-  "dialog.actions.decline": "Decline",
-  "dialog.actions.cancel": "Cancel",
-  "dialog.actions.save": "Save",
-  "dialog.title.form": "New Registration",
-  "dialog.title.error": "Something went wrong",
-  "dialog.title.success": "Confirmation",
-  "dialog.title.info": "Information",
-  "dialog.title.warning": "Important notice",
-  "dialog.title.confirm": "Confirmation",
-  "dialog.message.error": "There was an error processing the request.",
-  "dialog.message.success": "Operation completed successfully.",
-  "dialog.message.info": "New information is available.",
-  "dialog.message.warning": "Review the data before continuing.",
-  "dialog.message.confirm": "Confirm to continue.",
-  "toast.title.success": "Success",
-  "toast.title.error": "Error",
-  "toast.title.warning": "Warning",
-  "toast.title.info": "Info",
-  "toast.message.success": "Operation completed successfully.",
-  "toast.message.error": "There was an error processing the request.",
-  "toast.message.warning": "Attention: review the data you entered.",
-  "toast.message.info": "A new update is available in the system.",
-  "toast.close": "Close notification",
-  "tabs.label": "Tabs",
-  "loading.default": "Loading ...",
-  "login.title": "Accreditation system",
-  "login.school.placeholder": "Select school",
-  "login.user.placeholder": "User",
-  "login.password.placeholder": "Password",
-  "login.remember": "Remember me",
-  "login.submit": "Sign in",
-  "login.forgot": "Forgot your password?",
-  "login.loading": "Signing in...",
-  "login.error.required": "All fields are required",
-  "login.error.generic": "Error during login",
-  "auth.invalidCredentials": "Invalid credentials",
-  "table.search.placeholder": "Search...",
-  "table.empty": "No results found.",
-  "table.pagination.previous": "Previous",
-  "table.pagination.next": "Next",
-  "table.pagination.page": "Page",
-  "table.pagination.of": "of",
-  "select.placeholder.default": "Select an option",
-  "select.createLabel": "Create: \"{value}\"",
-  "school.eiscc": "SCHOOL OF SOFTWARE ENGINEERING AND COMPUTER SCIENCE",
-  "school.eiscb": "SCHOOL OF SYSTEMS ENGINEERING AND CYBER SECURITY",
-  "school.inggmi": "SCHOOL OF MINING MANAGEMENT ENGINEERING",
-  "school.inggem": "SCHOOL OF BUSINESS MANAGEMENT ENGINEERING",
-  "school.escel": "SCHOOL OF ELECTRONICS, MECHATRONICS AND NETWORKS ENGINEERING",
-  "school.ingamb": "SCHOOL OF ENVIRONMENTAL ENGINEERING",
-  "school.ingbio": "SCHOOL OF BIOMEDICAL ENGINEERING",
-  "school.ingciv": "SCHOOL OF CIVIL ENGINEERING",
-  "school.ingind": "SCHOOL OF INDUSTRIAL ENGINEERING"
+
+  "navbar": {
+    "user": {
+      "name": "Administrator",
+      "role": "Admi"
+    },
+    "openMenu": "Open menu",
+    "school": {
+      "label": "School",
+      "default": "QA"
+    },
+    "cycle": {
+      "label": "Cycle"
+    },
+    "program": {
+      "regular": "Regular",
+      "epe": "EPE"
+    }
+  },
+
+  "language": {
+    "es": "ES",
+    "en": "EN"
+  },
+
+  "sidebar": {
+    "open": "Open sidebar",
+    "close": "Close sidebar",
+    "logoAlt": "ABET Logo"
+  },
+
+  "dialog": {
+    "close": "Close",
+    "actions": {
+      "accept": "Accept",
+      "decline": "Decline",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "title": {
+      "form": "New Registration",
+      "error": "Something went wrong",
+      "success": "Confirmation",
+      "info": "Information",
+      "warning": "Important notice",
+      "confirm": "Confirmation"
+    },
+    "message": {
+      "error": "There was an error processing the request.",
+      "success": "Operation completed successfully.",
+      "info": "New information is available.",
+      "warning": "Review the data before continuing.",
+      "confirm": "Confirm to continue."
+    }
+  },
+
+  "toast": {
+    "title": {
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Info"
+    },
+    "message": {
+      "success": "Operation completed successfully.",
+      "error": "There was an error processing the request.",
+      "warning": "Attention: review the data you entered.",
+      "info": "A new update is available in the system."
+    },
+    "close": "Close notification"
+  },
+
+  "tabs": {
+    "label": "Tabs"
+  },
+
+  "loading": {
+    "default": "Loading ..."
+  },
+
+  "login": {
+    "title": "Accreditation system",
+    "school": {
+      "placeholder": "Select school"
+    },
+    "user": {
+      "placeholder": "User"
+    },
+    "password": {
+      "placeholder": "Password"
+    },
+    "remember": "Remember me",
+    "submit": "Sign in",
+    "forgot": "Forgot your password?",
+    "loading": "Signing in...",
+    "error": {
+      "required": "All fields are required",
+      "generic": "Error during login"
+    }
+  },
+
+  "auth": {
+    "invalidCredentials": "Invalid credentials"
+  },
+
+  "table": {
+    "search": {
+      "placeholder": "Search..."
+    },
+    "empty": "No results found.",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page",
+      "of": "of"
+    }
+  },
+
+  "select": {
+    "placeholder": {
+      "default": "Select an option"
+    },
+    "createLabel": "Create: \"{value}\""
+  },
+
+  "school": {
+    "eiscc": "SCHOOL OF SOFTWARE ENGINEERING AND COMPUTER SCIENCE",
+    "eiscb": "SCHOOL OF SYSTEMS ENGINEERING AND CYBER SECURITY",
+    "inggmi": "SCHOOL OF MINING MANAGEMENT ENGINEERING",
+    "inggem": "SCHOOL OF BUSINESS MANAGEMENT ENGINEERING",
+    "escel": "SCHOOL OF ELECTRONICS, MECHATRONICS AND NETWORKS ENGINEERING",
+    "ingamb": "SCHOOL OF ENVIRONMENTAL ENGINEERING",
+    "ingbio": "SCHOOL OF BIOMEDICAL ENGINEERING",
+    "ingciv": "SCHOOL OF CIVIL ENGINEERING",
+    "ingind": "SCHOOL OF INDUSTRIAL ENGINEERING"
+  },
+
+  "app": {
+    "name": "ABET Accreditation System",
+    "description": "ABET"
+  },
+
+  "page": {
+    "home": "Home",
+    "login": "Login",
+    "charts": "Charts",
+    "tables": "Tables",
+    "modals": "Modals",
+    "public": "Public"
+  },
+
+  "notFound": {
+    "title": "Page not found",
+    "message": "Sorry, we couldn’t find the page you’re looking for.",
+    "action": "Go home"
+  }
 }

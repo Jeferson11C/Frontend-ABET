@@ -48,10 +48,20 @@ export const columns: ColumnDef<Alumno>[] = [
     header: 'ACCIONES',
     cell: () => (
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="h-8 w-8 hover:text-red-600">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-8 w-8 hover:text-red-600"
+          aria-label="Ver"
+        >
           <EyeIcon className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8  hover:text-red-600">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-8 w-8 hover:text-red-600"
+          aria-label="Editar"
+        >
           <PencilIcon className="h-4 w-4" />
         </Button>
       </div>

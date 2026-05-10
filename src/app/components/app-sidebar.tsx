@@ -32,7 +32,7 @@ export function AppSidebar() {
   const isActive = (href?: string) => (href ? pathname === href : false)
 
   const handleLogout = () => {
-    localStorage.clear()
+    localStorage.removeItem('bearerToken')
     sessionStorage.clear()
     document.cookie.split(';').forEach(c => {
       document.cookie = c
@@ -49,17 +49,16 @@ export function AppSidebar() {
     { name: t('nav.home'), href: '/', icon: HomeIcon },
 
     {
-      name: t('nav.tests'),
+      name: t('nav.tests.label'),
       icon: Cog6ToothIcon,
       children: [
-        { name: t('nav.modals'), href: '/tests/modals' },
-        { name: t('nav.charts'), href: '/tests/charts' },
-        { name: t('nav.tables'), href: '/tests/tables' },
-        { name: t('nav.public'), href: '/tests/public' },
+        { name: t('nav.tests.modals'), href: '/tests/modals' },
+        { name: t('nav.tests.charts'), href: '/tests/charts' },
+        { name: t('nav.tests.tables'), href: '/tests/tables' },
+        { name: t('nav.tests.public'), href: '/tests/public' },
 
       ],
     },
-
 ]
 
   return (

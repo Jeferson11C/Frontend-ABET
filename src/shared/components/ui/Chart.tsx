@@ -31,13 +31,23 @@ export function ChartContainer({
         }).join("\n")
     }, [config])
 
+    const [isMounted, setIsMounted] = React.useState(false)
+
+    React.useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
     return (
         <ChartContext.Provider value={{ config }}>
             <style dangerouslySetInnerHTML={{ __html: `:root { ${chartStyles} }` }} />
-            <div className={`w-full aspect-video ${className}`}>
-                <ResponsiveContainer width="100%" height="100%">
-                    {children}
-                </ResponsiveContainer>
+            <div className={`w-full ${className}`}>
+                {isMounted ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                        {children}
+                    </ResponsiveContainer>
+                ) : (
+                    <div className="h-full w-full" />
+                )}
             </div>
         </ChartContext.Provider>
     )

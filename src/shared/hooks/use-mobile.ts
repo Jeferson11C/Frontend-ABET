@@ -19,10 +19,11 @@ function getScreen(): ScreenType {
 }
 
 export function useScreen() {
-    // Initialize synchronously from window to avoid SSR flash
-    const [screen, setScreen] = useState<ScreenType>(getScreen)
+    const [screen, setScreen] = useState<ScreenType>('desktop')
 
     useEffect(() => {
+        setScreen(getScreen())
+
         const queries = (Object.entries(BREAKPOINTS) as [ScreenType, string][]).map(
             ([type, query]) => {
                 const mql = window.matchMedia(query)

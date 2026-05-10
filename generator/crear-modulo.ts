@@ -129,7 +129,7 @@ const pageContent = `export default function Page() {
 fs.writeFileSync(path.join(appPageDir, 'page.tsx'), pageContent, { encoding: 'utf8' });
 
 // ── 5. Agregar ruta al sidebar ───────────────────────────────────────────────
-const sidebarPath = path.join(projectRoot, 'src/app/Components/app-sidebar.tsx');
+const sidebarPath = path.join(projectRoot, 'src/app/components/app-sidebar.tsx');
 
 if (fs.existsSync(sidebarPath)) {
     let sidebarContent = fs.readFileSync(sidebarPath, 'utf8');

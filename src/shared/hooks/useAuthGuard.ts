@@ -1,14 +1,14 @@
-// abet-frontend-base/src/shared/hooks/useAuthGuard.ts
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export function useAuthGuard() {
     const router = useRouter()
-    const [checking, setChecking] = useState(true)
+    const [checking, setChecking] = useState(false)
 
     useEffect(() => {
         const token = localStorage.getItem('bearerToken')
         if (!token) {
+            setChecking(true)
             router.replace('/auth/login')
         } else {
             setChecking(false)

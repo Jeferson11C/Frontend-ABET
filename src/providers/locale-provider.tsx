@@ -14,8 +14,13 @@ type I18nContextType = {
 
 const STORAGE_KEY = 'app_locale'
 const DEFAULT_LOCALE: Locale = 'es'
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365
 
-const messages: Record<Locale, Record<string, string>> = {
+interface Messages {
+  [key: string]: string | Messages
+}
+
+const messages: Record<Locale, Messages> = {
   es: esMessages,
   en: enMessages,
 }
@@ -23,20 +28,31 @@ const messages: Record<Locale, Record<string, string>> = {
 const I18nContext = createContext<I18nContextType | null>(null)
 
 function resolveMessage(locale: Locale, key: string) {
-  const value = messages[locale][key]
-  return value ?? key
+  const parts = key.split('.')
+  let current: string | Messages | undefined = messages[locale]
+
+  for (const part of parts) {
+    if (!current || typeof current !== 'object') return key
+    current = current[part]
+  }
+
+  return typeof current === 'string' ? current : key
 }
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE)
 
+  const persistLocale = useCallback((nextLocale: Locale) => {
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(STORAGE_KEY, nextLocale)
+    document.documentElement.lang = nextLocale
+    document.cookie = `${STORAGE_KEY}=${nextLocale}; path=/; max-age=${COOKIE_MAX_AGE}`
+  }, [])
+
   const setLocale = useCallback((nextLocale: Locale) => {
     setLocaleState(nextLocale)
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(STORAGE_KEY, nextLocale)
-      document.documentElement.lang = nextLocale
-    }
-  }, [])
+    persistLocale(nextLocale)
+  }, [persistLocale])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -45,6 +61,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     if (stored === 'es' || stored === 'en') {
       setLocaleState(stored)
       document.documentElement.lang = stored
+      document.cookie = `${STORAGE_KEY}=${stored}; path=/; max-age=${COOKIE_MAX_AGE}`
       return
     }
 
@@ -53,6 +70,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     setLocaleState(inferred)
     document.documentElement.lang = inferred
     window.localStorage.setItem(STORAGE_KEY, inferred)
+    document.cookie = `${STORAGE_KEY}=${inferred}; path=/; max-age=${COOKIE_MAX_AGE}`
   }, [])
 
   const t = useCallback((key: string) => resolveMessage(locale, key), [locale])

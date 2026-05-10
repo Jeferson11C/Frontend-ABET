@@ -67,22 +67,15 @@ function DialogContent({
             <DialogPrimitive.Popup
                 data-slot="dialog-content"
                 render={(popupProps) => {
-                    const resolvedClassName = typeof className === 'function'
-                        ? className(popupProps as any)
-                        : className
-
                     return (
                         <div
                             {...popupProps}
                             className={cn(
                                 "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-2xl bg-white p-6 text-sm text-zinc-600 shadow-2xl ring-1 ring-zinc-200 duration-100 outline-none sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-                                resolvedClassName
+                                className
                             )}
                         >
                             {children}
-                            {showCloseButton && (
-                                <DialogPrimitive.Close data-slot="dialog-close" render={<Button variant="ghost" size="sm" className="absolute top-2 right-2 p-1.5"><XCircleIcon /><span className="sr-only">{t('dialog.close')}</span></Button>} />
-                            )}
                         </div>
                     )
                 }}

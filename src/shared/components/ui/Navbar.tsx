@@ -46,8 +46,8 @@ function Navbar({
 
     const resolvedCycleLabel = cycleLabel ?? DEFAULT_CYCLE_LABEL
     const resolvedSchoolName = schoolName ?? t('navbar.school.default')
-    const resolvedUserName = userName ?? t('navbar.user')
-    const resolvedUserRole = userRole ?? t('sidebar.user.role')
+    const resolvedUserName = userName ?? t('navbar.user.name')
+    const resolvedUserRole = userRole ?? t('navbar.user.role')
     const resolvedUserInitials = userInitials ?? DEFAULT_USER_INITIALS
 
     const [selectedProgram, setSelectedProgram] = useState(resolvedProgramType)

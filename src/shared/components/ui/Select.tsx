@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useMemo, useState } from 'react'
-import SelectBase from 'react-select'
+import SelectBase, { type OnChangeValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 import { useI18n } from '@/providers'
 
@@ -79,9 +79,13 @@ function Select({
         })
     }, [options])
 
-    const handleChange = (selected: OptionItem | OptionItem[] | null) => {
+    const handleChange = (selected: OnChangeValue<OptionItem, boolean>) => {
+        const normalized = Array.isArray(selected)
+            ? [...selected] as OptionItem[]
+            : (selected as OptionItem | null)
+
         setInputValue('')
-        onChange?.(name, selected)
+        onChange?.(name, normalized)
     }
 
     const handleInputChange = (newValue: string) => {
@@ -153,7 +157,10 @@ function Select({
         menuPosition: 'fixed' as const,
         styles: selectStyles,
         onChange: handleChange,
-        onInputChange: handleInputChange,
+        onInputChange: (newValue: string) => {
+            handleInputChange(newValue)
+            return newValue
+        },
     }
 
     return (
@@ -165,13 +172,13 @@ function Select({
             )}
 
             {isCreatable ? (
-                <CreatableSelect
+                <CreatableSelect<OptionItem, boolean>
                     {...commonProps}
                     onCreateOption={handleCreateOption}
                     formatCreateLabel={(val: string) => t('select.createLabel').replace('{value}', val)}
                 />
             ) : (
-                <SelectBase {...commonProps} />
+                <SelectBase<OptionItem, boolean> {...commonProps} />
             )}
 
             {error && (

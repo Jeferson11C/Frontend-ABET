@@ -13,6 +13,7 @@ import { cn } from "@/shared/lib/utils"
 import { Button } from "./Button"
 import { Input } from "./Input"
 import { useI18n } from '@/providers'
+import { DEFAULT_PAGE_SIZE } from '@/shared/constants'
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
     return (
@@ -108,17 +109,19 @@ interface DataTableProps<TData, TValue> {
     searchPlaceholder?: string
     searchColumnId?: string
     actions?: DataTableAction[]
+    showPagination?: boolean
 }
 
 export function DataTable<TData, TValue>({
                                              columns,
                                              data,
-                                             pageSize = 10,
+                                             pageSize = DEFAULT_PAGE_SIZE,
                                              title,
                                              showSearch = true,
                                              searchPlaceholder,
                                              searchColumnId,
                                              actions = [],
+                                             showPagination = true,
                                          }: DataTableProps<TData, TValue>) {
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [globalFilter, setGlobalFilter] = React.useState("")
@@ -128,7 +131,7 @@ export function DataTable<TData, TValue>({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
+        getPaginationRowModel: showPagination ? getPaginationRowModel() : undefined,
         getFilteredRowModel: getFilteredRowModel(),
         onColumnFiltersChange: setColumnFilters,
         onGlobalFilterChange: setGlobalFilter,
@@ -140,7 +143,7 @@ export function DataTable<TData, TValue>({
             const value = row.getValue(columnId)
             return String(value ?? "").toLowerCase().includes(String(filterValue ?? "").toLowerCase())
         },
-        initialState: { pagination: { pageSize } }
+        initialState: { pagination: { pageSize: showPagination ? pageSize : Math.max(data.length, 1) } }
     })
 
     const searchValue = searchColumnId
@@ -230,31 +233,33 @@ export function DataTable<TData, TValue>({
             </Table>
 
             {/* PAGINACIÓN */}
-            <div className="flex items-center justify-center gap-4 py-4">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                    className="rounded-md bg-red-50 px-4 py-2 text-sm font-bold text-red-600 border-none hover:bg-red-100 disabled:bg-zinc-100 disabled:text-zinc-400 transition-all"
-                >
-                    {t('table.pagination.previous')}
-                </Button>
+            {showPagination && (
+                <div className="flex items-center justify-center gap-4 py-4">
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        className="rounded-md bg-red-50 px-4 py-2 text-sm font-bold text-red-600 border-none hover:bg-red-100 disabled:bg-zinc-100 disabled:text-zinc-400 transition-all"
+                    >
+                        {t('table.pagination.previous')}
+                    </Button>
 
-                <div className="text-[10px] font-black uppercase text-zinc-500 tracking-widest bg-zinc-100 px-3 py-1 rounded-full">
-                    {t('table.pagination.page')} {table.getState().pagination.pageIndex + 1} {t('table.pagination.of')} {table.getPageCount()}
+                    <div className="text-[10px] font-black uppercase text-zinc-500 tracking-widest bg-zinc-100 px-3 py-1 rounded-full">
+                        {t('table.pagination.page')} {table.getState().pagination.pageIndex + 1} {t('table.pagination.of')} {table.getPageCount()}
+                    </div>
+
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        className="rounded-md bg-red-50 px-4 py-2 text-sm font-bold text-red-600 border-none hover:bg-red-100 disabled:bg-zinc-100 disabled:text-zinc-400 transition-all"
+                    >
+                        {t('table.pagination.next')}
+                    </Button>
                 </div>
-
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                    className="rounded-md bg-red-50 px-4 py-2 text-sm font-bold text-red-600 border-none hover:bg-red-100 disabled:bg-zinc-100 disabled:text-zinc-400 transition-all"
-                >
-                    {t('table.pagination.next')}
-                </Button>
-            </div>
+            )}
         </div>
     )
 }
