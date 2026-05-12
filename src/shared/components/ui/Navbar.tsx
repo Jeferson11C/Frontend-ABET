@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Bars3BottomLeftIcon } from '@heroicons/react/24/outline'
 import { useSidebar, Button, LanguageSwitcher } from '@/shared/components'
 import { useI18n } from '@/providers'
@@ -22,6 +22,12 @@ type NavbarProps = {
     userInitials?: string
 }
 
+type StoredUser = {
+    first_name?: string
+    last_name?: string
+    is_admin?: boolean
+}
+
 function Navbar({
                     cycleLabel,
                     schoolName,
@@ -35,6 +41,19 @@ function Navbar({
     const { t } = useI18n()
     const { isMobile, isTablet } = useScreen()
 
+    const [storedUser, setStoredUser] = useState<StoredUser | null>(null)
+
+    useEffect(() => {
+        const raw = localStorage.getItem('token')
+        if (!raw) return
+        try {
+            const parsed = JSON.parse(raw) as StoredUser
+            setStoredUser(parsed)
+        } catch {
+            setStoredUser(null)
+        }
+    }, [])
+
     const resolvedProgramType = programType ?? DEFAULT_PROGRAM_TYPE
     const resolvedProgramOptions = useMemo(() => {
         const options = programOptions ?? DEFAULT_PROGRAM_OPTIONS
@@ -46,9 +65,25 @@ function Navbar({
 
     const resolvedCycleLabel = cycleLabel ?? DEFAULT_CYCLE_LABEL
     const resolvedSchoolName = schoolName ?? t('navbar.school.default')
-    const resolvedUserName = userName ?? t('navbar.user.name')
-    const resolvedUserRole = userRole ?? t('navbar.user.role')
-    const resolvedUserInitials = userInitials ?? DEFAULT_USER_INITIALS
+    const buildInitials = (firstName?: string, lastName?: string) => {
+        const first = firstName?.trim().charAt(0) ?? ''
+        const last = lastName?.trim().charAt(0) ?? ''
+        return `${first}${last}`.toUpperCase() || DEFAULT_USER_INITIALS
+    }
+
+    const resolvedUserName =
+        userName ??
+        ((storedUser ? `${storedUser.first_name ?? ''} ${storedUser.last_name ?? ''}`.trim() : '') ||
+            t('navbar.user.name'))
+
+    const resolvedUserRole =
+        userRole ??
+        ((storedUser ? (storedUser.is_admin ? 'admi' : '') : '') ||
+            t('navbar.user.role'))
+
+    const resolvedUserInitials =
+        userInitials ??
+        (storedUser ? buildInitials(storedUser.first_name, storedUser.last_name) : DEFAULT_USER_INITIALS)
 
     const [selectedProgram, setSelectedProgram] = useState(resolvedProgramType)
 
@@ -148,9 +183,11 @@ function Navbar({
                     <span className="text-[12.5px] font-bold text-zinc-800 truncate max-w-[160px]">
                         {resolvedUserName}
                     </span>
-                    <span className="text-[10px] text-zinc-400 truncate max-w-[160px]">
-                        {resolvedUserRole}
-                    </span>
+                    {resolvedUserRole ? (
+                        <span className="text-[10px] text-zinc-400 truncate max-w-[160px]">
+                            {resolvedUserRole}
+                        </span>
+                    ) : null}
                 </div>
             )}
         </div>

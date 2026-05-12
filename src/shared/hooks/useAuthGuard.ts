@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-export function useAuthGuard() {
+export function useAuthGuard(enabled = true) {
     const router = useRouter()
     const [checking, setChecking] = useState(false)
 
     useEffect(() => {
+        if (!enabled) {
+            setChecking(false)
+            return
+        }
         const token = localStorage.getItem('bearerToken')
         if (!token) {
             setChecking(true)
@@ -13,7 +17,7 @@ export function useAuthGuard() {
         } else {
             setChecking(false)
         }
-    }, [router])
+    }, [enabled, router])
 
     return checking
 }

@@ -15,7 +15,13 @@ function NotFoundPage() {
   }, [])
 
   const handleGoHome = () => {
-    router.push('/')
+    const token = localStorage.getItem('bearerToken')
+
+    if (token) {
+      router.push('/')
+    } else {
+      router.push('/auth/login')
+    }
   }
 
   return (

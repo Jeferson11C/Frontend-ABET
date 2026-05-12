@@ -1,21 +1,69 @@
 import type { LoginPayload } from '@/shared/types'
 
-const fakeToken = 'eyJhbGciOiFAKE_TOKEN'
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? ''
 
-export const loginMock = (payload: LoginPayload): Promise<{ accessToken: string; user: any }> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const isDemo = payload.codigo === 'demo' && payload.password === 'demo'
-      const isTemporary = payload.codigo === 'Admi' && payload.password === 'abet123'
+type LoginResponse = {
+  code: number
+  message: string
+  data: {
+    user: any
+    access_token: string
+  }
+}
 
-      if (isDemo || isTemporary) {
-        resolve({
-          accessToken: fakeToken,
-          user: { sub: payload.codigo, name: 'Usuario Demo', college: payload.escuela },
-        })
-      } else {
-        reject(new Error('auth.invalidCredentials'))
-      }
-    }, 700)
+export const loginByCredentials = async (
+  payload: LoginPayload
+): Promise<{ accessToken: string; user: any }> => {
+  if (!BASE_URL) {
+    throw new Error('auth.missingApiUrl')
+  }
+
+  const res = await fetch(`${BASE_URL}/api/users/login-by-credentials`, {
+    method: 'POST',
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: payload.codigo,
+      password: payload.password,
+    }),
+  })
+
+  const body = (await res.json().catch(() => null)) as LoginResponse | null
+
+  if (!res.ok || !body?.data?.access_token) {
+    throw new Error(body?.message || 'login.error.generic')
+  }
+
+  return {
+    accessToken: body.data.access_token,
+    user: body.data.user,
+  }
+}
+
+const getStoredToken = () => {
+  const raw = localStorage.getItem('bearerToken')
+  if (!raw) return ''
+  try {
+    return JSON.parse(raw) as string
+  } catch {
+    return ''
+  }
+}
+
+export const logoutUser = async (): Promise<void> => {
+  if (!BASE_URL) {
+    throw new Error('auth.missingApiUrl')
+  }
+
+  const token = getStoredToken()
+
+  await fetch(`${BASE_URL}/api/users/logout`, {
+    method: 'POST',
+    headers: {
+      accept: '*/*',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
   })
 }

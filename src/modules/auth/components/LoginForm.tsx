@@ -2,9 +2,10 @@
 
 import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Input, Select, Button, LoadingDialog } from '@/shared/components'
+import { signIn } from 'next-auth/react'
+import { Input, Select, Button, LoadingDialog, ErrorDialog } from '@/shared/components'
 import { LoginPayload } from '@/shared/types'
-import { loginMock } from '@/modules/auth/services'
+import { loginByCredentials } from '@/modules/auth/services'
 import { schoolOptions } from '@/modules/auth/constants'
 import { useI18n } from '@/providers'
 
@@ -14,6 +15,8 @@ export default function LoginForm() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogMessage, setDialogMessage] = useState('')
   const router = useRouter()
   const { t } = useI18n()
 
@@ -25,6 +28,7 @@ export default function LoginForm() {
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault()
     setError(null)
+    setDialogOpen(false)
 
     if (!escuela || !codigo || !password) {
       setError(t('login.error.required'))
@@ -34,19 +38,26 @@ export default function LoginForm() {
     const payload: LoginPayload = { escuela, codigo, password }
     setLoading(true)
     try {
-      const res = await loginMock(payload)
+      const res = await loginByCredentials(payload)
       localStorage.setItem('bearerToken', JSON.stringify(res.accessToken))
       localStorage.setItem('token', JSON.stringify(res.user))
       localStorage.setItem('escuela', JSON.stringify(escuela))
-      router.push('/')
+      router.replace('/')
       // aquí podrías setear auth en contexto si existe
     } catch (err: any) {
-      const messageKey = typeof err?.message === 'string' ? err.message : 'login.error.generic'
-      const translated = t(messageKey)
-      setError(translated === messageKey ? t('login.error.generic') : translated)
+      const rawMessage = typeof err?.message === 'string' ? err.message : ''
+      const translated = rawMessage ? t(rawMessage) : ''
+      const resolvedMessage =
+        translated && translated !== rawMessage ? translated : (rawMessage || t('login.error.generic'))
+      setDialogMessage(resolvedMessage)
+      setDialogOpen(true)
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleMicrosoftLogin = async () => {
+    await signIn('azure-ad', { callbackUrl: '/' })
   }
 
   return (
@@ -98,6 +109,11 @@ export default function LoginForm() {
       </div>
 
       {loading && <LoadingDialog isOpen={loading} label={t('login.loading')} />}
+      <ErrorDialog
+        isOpen={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        message={dialogMessage}
+      />
     </form>
   )
 }

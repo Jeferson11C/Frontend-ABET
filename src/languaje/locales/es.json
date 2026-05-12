@@ -16,7 +16,7 @@
   "navbar": {
     "user": {
       "name": "Administrador",
-      "role": "Admini"
+      "role": "Admi"
     },
     "openMenu": "Abrir menu",
     "school": {
@@ -93,7 +93,7 @@
   },
 
   "login": {
-    "title": "Sistema de acreditacion",
+    "title": "Sistema de  acreditación",
     "school": {
       "placeholder": "Selecciona escuela"
     },
@@ -150,7 +150,7 @@
   },
 
   "app": {
-    "name": "Sistema de Acreditacion ABET",
+    "name": "Sistema de Acreditación ABET",
     "description": "ABET"
   },
 
